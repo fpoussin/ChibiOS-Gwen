@@ -10,11 +10,16 @@ namespace Gwen
 {
     namespace Renderer
     {
+        extern "C" {
+            #include "gdisp.h"
+        }
 
         ChibiGFX::ChibiGFX()
         {
             //m_RenderOffset = Gwen::Point( 0, 0 );
             m_fScale = 1.0f;
+            gdispInit();
+            //gdispClear(Black);
         }
 
         ChibiGFX::~ChibiGFX()
@@ -23,21 +28,17 @@ namespace Gwen
                 GetCTT()->ShutDown();
         }
 
-
         void ChibiGFX::DrawFilledRect( Gwen::Rect rect )
         {
-         //convert color to appropriate type
-
-         //call Chibios/GFX interface
-
-
+          // Convert color to appropriate type
+          // Call gdisp
+          gdispFillArea(rect.x, rect.y, rect.w, rect.h,
+                        RGB565CONVERT(this->m_color.r, this->m_color.g, this->m_color.b));
         }
 
         void ChibiGFX::DrawLine( int x, int y, int a, int b )
         {
-
-        // Draw line
-
+          gdispDrawLine(x, y, a, b);
         }
 
         void ChibiGFX::DrawLinedRect( Gwen::Rect rect )
@@ -47,7 +48,7 @@ namespace Gwen
 
             DrawFilledRect( Gwen::Rect( rect.x, rect.y, 1, rect.h ) );
             DrawFilledRect( Gwen::Rect( rect.x + rect.w-1, rect.y, 1, rect.h ) );
-        };
+        }
 
         void ChibiGFX::DrawPixel( int x, int y )
         {

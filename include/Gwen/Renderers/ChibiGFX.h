@@ -10,14 +10,15 @@
 #include "Gwen/Gwen.h"
 #include "Gwen/BaseRender.h"
 
+
 namespace Gwen 
 {
 	namespace Renderer 
-	{
+        {
 
         class ChibiGFX : public Gwen::Renderer::Base
 		{
-			public:
+            public:
 
                 ChibiGFX();
                 ~ChibiGFX();
@@ -47,7 +48,7 @@ namespace Gwen
                 virtual Gwen::Point MeasureText( Gwen::Font* pFont, const Gwen::UnicodeString& text );
 
              private:
-                Color m_color;
+                Gwen::Color m_color;
                 float m_fScale;
 
 		};
