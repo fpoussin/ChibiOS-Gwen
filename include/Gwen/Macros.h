@@ -4,7 +4,6 @@
 #define GWEN_MACROS_H
 #include <stdlib.h>
 #include <stdarg.h>
-#include <memory.h>
 #include <algorithm>
 
 // Not tied to platform api.
