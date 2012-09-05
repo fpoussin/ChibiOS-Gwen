@@ -8,10 +8,10 @@
 #ifndef GWEN_DRAGANDDROP_H
 #define GWEN_DRAGANDDROP_H
 
-#include <sstream>
-
 #include "Gwen/Skin.h"
 #include "Gwen/Structures.h"
+#include <sstream>
+#include <string>
 
 namespace Gwen
 {

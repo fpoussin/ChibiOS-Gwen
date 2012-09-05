@@ -2,6 +2,7 @@
 #ifndef GWEN_CONTROLLIST_H
 #define GWEN_CONTROLLIST_H
 
+#include <algorithm>
 
 namespace Gwen
 {

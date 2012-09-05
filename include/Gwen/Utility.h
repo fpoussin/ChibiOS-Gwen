@@ -9,6 +9,8 @@
 #define GWEN_UTILITY_H
 
 #include <sstream>
+#include <string>
+#include "hacks.h"
 #include <vector>
 #include "Gwen/Structures.h"
 
@@ -37,27 +39,27 @@ namespace Gwen
 	#pragma warning( disable : 4996 )
 #endif
 
-		inline String UnicodeToString( const UnicodeString& strIn )
+        inline String UnicodeToString( const UnicodeString& strIn )
 		{
 			if ( !strIn.length() ) return "";
 
 			String temp(strIn.length(), (char)0);
-
-			std::use_facet< std::ctype<wchar_t> >(std::locale()). \
-				narrow(&strIn[0], &strIn[0]+strIn.length(), ' ', &temp[0]);
-
+// TODO: Clean
+//           std::use_facet< std::ctype<wchar_t> >(std::locale()). \
+//              narrow(&strIn[0], &strIn[0]+strIn.length(), ' ', &temp[0]);
+//
 			return temp;
 		}
 
-		inline UnicodeString StringToUnicode( const String& strIn )
+        inline UnicodeString StringToUnicode( const String& strIn )
 		{
 			if ( !strIn.length() ) return L"";
 
 			UnicodeString temp(strIn.length(), (wchar_t)0);
-
-			std::use_facet< std::ctype<wchar_t> >(std::locale()). \
-				widen(&strIn[0], &strIn[0]+strIn.length(), &temp[0]);
-
+// TODO: Clean
+//            std::use_facet< std::ctype<wchar_t> >(std::locale()). \
+//                widen(&strIn[0], &strIn[0]+strIn.length(), &temp[0]);
+//
 			return temp; 
 		}
 
@@ -78,9 +80,10 @@ namespace Gwen
 		template <class T>
 		String ToString( const T& object )
 		{
-			std::ostringstream os;
-			os << object;
-			return os.str();
+// TODO: Clean
+            std::ostringstream os;
+            os << object;
+            return os.str();
 		}
 
 		inline Gwen::Rect ClampRectToRect( Gwen::Rect inside, Gwen::Rect outside, bool clampSize = false )

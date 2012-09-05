@@ -280,7 +280,7 @@ bool Gwen::Input::HandleAccelerator( Controls::Base* pCanvas, Gwen::UnicodeChar 
 	if ( Gwen::Input::IsShiftDown() )
 		accelString += L"SHIFT+";
 
-	chr = towupper( chr );
+    chr = towupper( chr );
 
 	accelString += chr;
 

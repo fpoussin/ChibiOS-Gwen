@@ -10,16 +10,11 @@ namespace Gwen
 {
     namespace Renderer
     {
-        extern "C" {
-            #include "gdisp.h"
-        }
-
         ChibiGFX::ChibiGFX()
         {
-            //m_RenderOffset = Gwen::Point( 0, 0 );
             m_fScale = 1.0f;
             gdispInit();
-            //gdispClear(Black);
+            gdispClear(RGB2COLOR(0, 0, 0));
         }
 
         ChibiGFX::~ChibiGFX()
@@ -28,20 +23,24 @@ namespace Gwen
                 GetCTT()->ShutDown();
         }
 
-        void ChibiGFX::DrawFilledRect( Gwen::Rect rect )
+        inline color_t ChibiGFX::RGB2Color(Gwen::Color const& color) const
         {
-          // Convert color to appropriate type
-          // Call gdisp
+            return RGB2COLOR(color.r, color.g, color.b);
+        }
+
+        void ChibiGFX::DrawFilledRect( Gwen::Rect const& rect ) const
+        {
           gdispFillArea(rect.x, rect.y, rect.w, rect.h,
-                        RGB565CONVERT(this->m_color.r, this->m_color.g, this->m_color.b));
+                        RGB2Color(this->m_color));
         }
 
-        void ChibiGFX::DrawLine( int x, int y, int a, int b )
+        void ChibiGFX::DrawLine( int const& x, int const& y, int const& a, int const& b ) const
         {
-          gdispDrawLine(x, y, a, b);
+          gdispDrawLine(x, y, a, b,
+                        RGB2Color(this->m_color));
         }
 
-        void ChibiGFX::DrawLinedRect( Gwen::Rect rect )
+        void ChibiGFX::DrawLinedRect( Gwen::Rect const& rect ) const
         {
             DrawFilledRect( Gwen::Rect( rect.x, rect.y, rect.w, 1 ) );
             DrawFilledRect( Gwen::Rect( rect.x, rect.y + rect.h-1, rect.w, 1 ) );
@@ -50,12 +49,12 @@ namespace Gwen
             DrawFilledRect( Gwen::Rect( rect.x + rect.w-1, rect.y, 1, rect.h ) );
         }
 
-        void ChibiGFX::DrawPixel( int x, int y )
+        void ChibiGFX::DrawPixel( int const& x, int const& y ) const
         {
             DrawFilledRect( Gwen::Rect( x, y, 1, 1 ) );
         }
 
-        void ChibiGFX::DrawShavedCornerRect( Gwen::Rect rect, bool bSlight )
+        void ChibiGFX::DrawShavedCornerRect( Gwen::Rect rect, bool bSlight ) const
         {
             // Draw INSIDE the w/h.
             rect.w -= 1;
@@ -152,7 +151,7 @@ namespace Gwen
 */
         void ChibiGFX::DrawMissingImage( Gwen::Rect pTargetRect )
         {
-            SetDrawColor( Colors::Red );
+            SetDrawColor( Gwen::Colors::Red );
             DrawFilledRect( pTargetRect );
         }
 

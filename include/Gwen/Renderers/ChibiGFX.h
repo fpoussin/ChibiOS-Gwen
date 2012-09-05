@@ -10,6 +10,11 @@
 #include "Gwen/Gwen.h"
 #include "Gwen/BaseRender.h"
 
+extern "C" {
+    #include "ch.h"
+    #include "hal.h"
+    #include "gdisp_connector.h"
+}
 
 namespace Gwen 
 {
@@ -23,15 +28,19 @@ namespace Gwen
                 ChibiGFX();
                 ~ChibiGFX();
 
+                inline color_t RGB2Color(Gwen::Color const& color) const;
+                uint16_t getHeight() const { return gdispGetHeight(); }
+                uint16_t getWidth() const { return gdispGetWidth(); }
+
                 //The following functions are empty in Gwen::Renderer::Base and must be implemented by your custom class:
                 virtual void Begin(){}
                 virtual void End(){}
-                virtual void SetDrawColor( Color color ){ m_color = color; }
-                virtual void DrawPixel( int x, int y);
-                virtual void DrawLine( int x, int y, int a, int b );
-                virtual void DrawFilledRect( Rect rect );
-                virtual void DrawLinedRect( Rect rect );
-                virtual void DrawShavedCornerRect( Gwen::Rect rect, bool bSlight );
+                virtual void SetDrawColor( Color const& color ){ m_color = color; }
+                virtual void DrawPixel( int const& x, int const& y) const;
+                virtual void DrawLine( int const& x, int const& y, int const& a, int const& b ) const;
+                virtual void DrawFilledRect( Rect const& rect ) const;
+                virtual void DrawLinedRect( Rect const& rect ) const;
+                virtual void DrawShavedCornerRect( Gwen::Rect rect, bool bSlight ) const;
                 virtual void StartClip(){}
                 virtual void EndClip(){}
 

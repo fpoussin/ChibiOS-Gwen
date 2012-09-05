@@ -41,7 +41,7 @@ namespace Gwen
 			return MeasureText( pFont, str );
 		}
 				
-		void Base::DrawLinedRect( Gwen::Rect rect )
+        void Base::DrawLinedRect( Gwen::Rect const& rect )
 		{
 			DrawFilledRect( Gwen::Rect( rect.x, rect.y, rect.w, 1 ) );
 			DrawFilledRect( Gwen::Rect( rect.x, rect.y + rect.h-1, rect.w, 1 ) );
@@ -50,12 +50,12 @@ namespace Gwen
 			DrawFilledRect( Gwen::Rect( rect.x + rect.w-1, rect.y, 1, rect.h ) );
 		};
 
-		void Base::DrawPixel( int x, int y )
+        void Base::DrawPixel( int const& x, int const& y )
 		{
 			DrawFilledRect( Gwen::Rect( x, y, 1, 1 ) );
 		}
 
-		void Base::DrawShavedCornerRect( Gwen::Rect rect, bool bSlight )
+        void Base::DrawShavedCornerRect( Gwen::Rect rect, bool bSlight )
 		{
 			// Draw INSIDE the w/h.
 			rect.w -= 1;
