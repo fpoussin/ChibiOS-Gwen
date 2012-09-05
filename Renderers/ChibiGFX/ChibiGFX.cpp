@@ -14,13 +14,21 @@ namespace Gwen
         {
             m_fScale = 1.0f;
             gdispInit();
-            gdispClear(RGB2COLOR(0, 0, 0));
+            gdispClear(RGB2COLOR(0xBB,0xBB,0xBB));
         }
 
         ChibiGFX::~ChibiGFX()
         {
             if ( GetCTT() )
                 GetCTT()->ShutDown();
+        }
+        
+        void ChibiGFX::SetDrawColor( Gwen::Color const& color )
+        {
+          m_color.r = color.r;
+          m_color.g = color.g;
+          m_color.b = color.b;
+          m_color.a = color.a;
         }
 
         inline color_t ChibiGFX::RGB2Color(Gwen::Color const& color) const
@@ -30,14 +38,12 @@ namespace Gwen
 
         void ChibiGFX::DrawFilledRect( Gwen::Rect const& rect ) const
         {
-          gdispFillArea(rect.x, rect.y, rect.w, rect.h,
-                        RGB2Color(this->m_color));
+          gdispFillArea(rect.x, rect.y, rect.w, rect.h, RGB2Color(this->m_color));
         }
 
         void ChibiGFX::DrawLine( int const& x, int const& y, int const& a, int const& b ) const
         {
-          gdispDrawLine(x, y, a, b,
-                        RGB2Color(this->m_color));
+          gdispDrawLine(x, y, a, b, RGB2Color(this->m_color));
         }
 
         void ChibiGFX::DrawLinedRect( Gwen::Rect const& rect ) const
@@ -149,18 +155,18 @@ namespace Gwen
             return true;
         }
 */
+
         void ChibiGFX::DrawMissingImage( Gwen::Rect pTargetRect )
         {
             SetDrawColor( Gwen::Colors::Red );
             DrawFilledRect( pTargetRect );
         }
 
-
         /*
             If they haven't defined these font functions in their renderer code
             we just draw some rects where the letters would be to give them an idea.
         */
-
+/*
         void ChibiGFX::RenderText( Gwen::Font* pFont, Gwen::Point pos, const Gwen::UnicodeString& text )
         {
             float fSize = pFont->size * Scale();
@@ -176,7 +182,7 @@ namespace Gwen
                 /*
                     This isn't important, it's just me messing around changing the
                     shape of the rect based on the letter.. just for fun.
-                */
+                *//*
                 if ( chr == 'l' || chr == 'i' || chr == '!' || chr == 't' )
                 {
                     r.w = 1;
@@ -216,5 +222,6 @@ namespace Gwen
 
             return p;
         }
+        */
     }
 }

@@ -35,7 +35,7 @@ namespace Gwen
                 //The following functions are empty in Gwen::Renderer::Base and must be implemented by your custom class:
                 virtual void Begin(){}
                 virtual void End(){}
-                virtual void SetDrawColor( Color const& color ){ m_color = color; }
+                virtual void SetDrawColor( Color const& color );
                 virtual void DrawPixel( int const& x, int const& y) const;
                 virtual void DrawLine( int const& x, int const& y, int const& a, int const& b ) const;
                 virtual void DrawFilledRect( Rect const& rect ) const;
@@ -53,9 +53,9 @@ namespace Gwen
                 //You can also ignore these if you don't care about having text on your GUI. That would be silly though
                 virtual void LoadFont( Gwen::Font* pFont ){}
                 virtual void FreeFont( Gwen::Font* pFont ){}
-                virtual void RenderText( Gwen::Font* pFont, Gwen::Point pos, const Gwen::UnicodeString& text );
+              /*  virtual void RenderText( Gwen::Font* pFont, Gwen::Point pos, const Gwen::UnicodeString& text );
                 virtual Gwen::Point MeasureText( Gwen::Font* pFont, const Gwen::UnicodeString& text );
-
+*/
              private:
                 Gwen::Color m_color;
                 float m_fScale;
