@@ -14,7 +14,7 @@ namespace Gwen
         {
             m_fScale = 1.0f;
             gdispInit();
-            gdispClear(RGB2COLOR(0xBB,0xBB,0xBB));
+            gdispClear(RGB2COLOR(0,0,0));
         }
 
         ChibiGFX::~ChibiGFX()
@@ -29,6 +29,19 @@ namespace Gwen
           m_color.g = color.g;
           m_color.b = color.b;
           m_color.a = color.a;
+        }
+
+        inline Gwen::Color ChibiGFX::BlendColor(Gwen::Color const& c1, Gwen::Color const& c2) const
+        {
+            Gwen::Color result;
+            float a1 = c1.a / 255.0;
+            float a2 = c2.a / 255.0;
+
+            result.r = (int) (a1 * c1.r + a2 * (1 - a1) * c2.r);
+            result.g = (int) (a1 * c1.g + a2 * (1 - a1) * c2.g);
+            result.b = (int) (a1 * c1.b + a2 * (1 - a1) * c2.b);
+            result.a = (int) (255 * (a1 + a2 * (1 - a1)));
+            return result;
         }
 
         inline color_t ChibiGFX::RGB2Color(Gwen::Color const& color) const
@@ -166,7 +179,7 @@ namespace Gwen
             If they haven't defined these font functions in their renderer code
             we just draw some rects where the letters would be to give them an idea.
         */
-/*
+
         void ChibiGFX::RenderText( Gwen::Font* pFont, Gwen::Point pos, const Gwen::UnicodeString& text )
         {
             float fSize = pFont->size * Scale();
@@ -178,11 +191,10 @@ namespace Gwen
                 if ( chr == ' ' ) continue;
 
                 Gwen::Rect r( pos.x + i * fSize * 0.4, pos.y, fSize * 0.4 -1, fSize );
-
                 /*
                     This isn't important, it's just me messing around changing the
                     shape of the rect based on the letter.. just for fun.
-                *//*
+                */
                 if ( chr == 'l' || chr == 'i' || chr == '!' || chr == 't' )
                 {
                     r.w = 1;
@@ -222,6 +234,18 @@ namespace Gwen
 
             return p;
         }
-        */
+
+        void ChibiGFX::LoadFont( Gwen::Font* font )
+        {
+            font->realsize = font->size * Scale();
+
+            font->data =  (void *)&OpenSans_ttf;
+        }
+
+        void ChibiGFX::FreeFont( Gwen::Font* pFont )
+        {
+            pFont->data = NULL;
+        }
+
     }
 }

@@ -11,7 +11,7 @@
 //
 // Disables animation functions.
 //
-//#define GWEN_NO_ANIMATION 
+//#define GWEN_NO_ANIMATION
 
 #endif
 

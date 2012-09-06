@@ -9,14 +9,87 @@
 
 using namespace Gwen;
 
-#ifdef _MSC_VER
-	#pragma warning(disable:4267)// conversion from 'size_t' to 'int', possible loss of data
-#endif
+template <typename T>
+const T& Gwen::Utility::Max( const T& x, const T& y )
+{
+  if ( y < x ) return x;
+  return y;
+}
 
-#ifdef __MINGW32__
-	#undef vswprintf
-	#define vswprintf _vsnwprintf
-#endif
+template <typename T>
+const T& Gwen::Utility::Min( const T& x, const T& y )
+{
+  if ( y > x ) return x;
+  return y;
+}
+
+String Gwen::Utility::UnicodeToString( const UnicodeString& strIn )
+{
+    if ( !strIn.length() ) return "";
+
+    String temp(strIn.length(), (char)0);
+// TODO: Clean
+   std::use_facet< std::ctype<wchar_t> >(std::locale()). \
+      narrow(&strIn[0], &strIn[0]+strIn.length(), ' ', &temp[0]);
+//
+    return temp;
+}
+
+UnicodeString Gwen::Utility::StringToUnicode( const String& strIn )
+{
+    if ( !strIn.length() ) return L"";
+
+    UnicodeString temp(strIn.length(), (wchar_t)0);
+// TODO: Clean
+    std::use_facet< std::ctype<wchar_t> >(std::locale()). \
+        widen(&strIn[0], &strIn[0]+strIn.length(), &temp[0]);
+//
+    return temp;
+}
+
+template<typename T> void Gwen::Utility::Replace( T& str, const T& strFind, const T& strReplace )
+{
+    size_t pos = 0;
+    while( (pos = str.find(strFind, pos) ) != T::npos )
+    {
+        str.replace( pos, strFind.length(), strReplace );
+        pos += strReplace.length();
+    }
+}
+
+Gwen::Rect Gwen::Utility::ClampRectToRect( Gwen::Rect inside, Gwen::Rect outside, bool clampSize )
+{
+    if ( inside.x < outside.x )
+        inside.x = outside.x;
+
+    if ( inside.y  < outside.y )
+        inside.y = outside.y;
+
+    if ( inside.x + inside.w > outside.x + outside.w )
+    {
+        if ( clampSize )
+            inside.w = outside.w;
+        else
+            inside.x = outside.x + outside.w - inside.w;
+    }
+    if ( inside.y + inside.h > outside.y + outside.h )
+    {
+        if ( clampSize )
+            inside.h = outside.h;
+        else
+            inside.y = outside.w + outside.h - inside.h;
+    }
+
+    return inside;
+}
+
+template <class T>
+String Gwen::Utility::ToString( const T& object )
+{
+    std::ostringstream os;
+    os << object;
+    return os.str();
+}
 
 UnicodeString Gwen::Utility::Format( const wchar_t* fmt, ... )
 {
@@ -30,8 +103,6 @@ UnicodeString Gwen::Utility::Format( const wchar_t* fmt, ... )
 	UnicodeString str = strOut;
 	return str;
 }
-
-
 
 void Gwen::Utility::Strings::Split( const Gwen::String& str, const Gwen::String& seperator, Strings::List& outbits, bool bLeave )
 {
@@ -159,7 +230,13 @@ void Gwen::Utility::Strings::Strip( Gwen::UnicodeString& str, const Gwen::Unicod
 	}
 }
 
-
+template <typename T>
+T Gwen::Utility::Strings::TrimLeft( const T& str, const T& strChars )
+{
+    T outstr = str;
+    outstr.erase( 0, outstr.find_first_not_of( strChars ) );
+    return outstr;
+}
 
 
 

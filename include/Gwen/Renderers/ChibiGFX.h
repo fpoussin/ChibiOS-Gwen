@@ -14,6 +14,7 @@ extern "C" {
     #include "ch.h"
     #include "hal.h"
     #include "gdisp_connector.h"
+    #include "opensans.ttf.h"
 }
 
 namespace Gwen 
@@ -28,6 +29,7 @@ namespace Gwen
                 ChibiGFX();
                 ~ChibiGFX();
 
+                inline Gwen::Color BlendColor(Gwen::Color const& c1, Gwen::Color const& c2) const;
                 inline color_t RGB2Color(Gwen::Color const& color) const;
                 uint16_t getHeight() const { return gdispGetHeight(); }
                 uint16_t getWidth() const { return gdispGetWidth(); }
@@ -51,11 +53,11 @@ namespace Gwen
                 virtual void DrawMissingImage( Gwen::Rect pTargetRect );
 
                 //You can also ignore these if you don't care about having text on your GUI. That would be silly though
-                virtual void LoadFont( Gwen::Font* pFont ){}
-                virtual void FreeFont( Gwen::Font* pFont ){}
-              /*  virtual void RenderText( Gwen::Font* pFont, Gwen::Point pos, const Gwen::UnicodeString& text );
+                virtual void LoadFont( Gwen::Font* pFont );
+                virtual void FreeFont( Gwen::Font* pFont );
+                virtual void RenderText( Gwen::Font* pFont, Gwen::Point pos, const Gwen::UnicodeString& text );
                 virtual Gwen::Point MeasureText( Gwen::Font* pFont, const Gwen::UnicodeString& text );
-*/
+
              private:
                 Gwen::Color m_color;
                 float m_fScale;

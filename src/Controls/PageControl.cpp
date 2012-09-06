@@ -139,7 +139,9 @@ void PageControl::NextPage()
 	if ( m_pPages[m_iCurrentPage] )
 	{
 		m_pPages[m_iCurrentPage]->Dock( Pos::None );
+#ifndef GWEN_NO_ANIMATION
 		Anim::Add( m_pPages[m_iCurrentPage], new Anim::Pos::X( m_pPages[m_iCurrentPage]->X(), Width() * -1, 0.2f, true, 0.0f, -1 ) );
+#endif
 	}
 
 	ShowPage( m_iCurrentPage + 1 );
@@ -147,7 +149,9 @@ void PageControl::NextPage()
 	if ( m_pPages[m_iCurrentPage] )
 	{
 		m_pPages[m_iCurrentPage]->Dock( Pos::None );
+#ifndef GWEN_NO_ANIMATION
 		Anim::Add( m_pPages[m_iCurrentPage], new Anim::Pos::X( Width(), 0, 0.2f, false, 0.0f, -1 ) );
+#endif
 	}
 }
 
@@ -158,7 +162,9 @@ void PageControl::PreviousPage()
 	if ( m_pPages[m_iCurrentPage] )
 	{
 		m_pPages[m_iCurrentPage]->Dock( Pos::None );
+#ifndef GWEN_NO_ANIMATION
 		Anim::Add( m_pPages[m_iCurrentPage], new Anim::Pos::X( m_pPages[m_iCurrentPage]->X(), Width(), 0.3f, true, 0.0f, -1 ) );
+#endif
 	}
 
 	ShowPage( m_iCurrentPage - 1 );
@@ -166,7 +172,9 @@ void PageControl::PreviousPage()
 	if ( m_pPages[m_iCurrentPage] )
 	{
 		m_pPages[m_iCurrentPage]->Dock( Pos::None );
+#ifndef GWEN_NO_ANIMATION
 		Anim::Add( m_pPages[m_iCurrentPage], new Anim::Pos::X( Width() * -1, 0, 0.3f, false, 0.0f, -1 ) );
+#endif
 	}
 }
 
