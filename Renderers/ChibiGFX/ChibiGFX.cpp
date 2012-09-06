@@ -239,7 +239,7 @@ namespace Gwen
         {
             font->realsize = font->size * Scale();
 
-            font->data =  (void *)&OpenSans_ttf;
+            //font->data =  (void *)&OpenSans_ttf;
         }
 
         void ChibiGFX::FreeFont( Gwen::Font* pFont )

@@ -14,7 +14,6 @@ extern "C" {
     #include "ch.h"
     #include "hal.h"
     #include "gdisp_connector.h"
-    #include "opensans.ttf.h"
 }
 
 namespace Gwen 

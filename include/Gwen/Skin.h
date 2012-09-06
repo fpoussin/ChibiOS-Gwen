@@ -245,6 +245,13 @@ namespace Gwen
 					m_DefaultFont.facename = strFacename;
 					m_DefaultFont.size = fSize;
 				}
+				
+				virtual void SetDefaultFont( const Gwen::UnicodeString& strFacename, void *data, float fSize = 10.0f )
+				{
+					m_DefaultFont.facename = strFacename;
+					m_DefaultFont.data = data;
+					m_DefaultFont.size = fSize;
+				}
 
 			protected:
 
