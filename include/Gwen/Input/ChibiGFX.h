@@ -46,8 +46,8 @@ namespace Gwen
                     if ( !m_Canvas ) return false;
                   
                     // Current coordinates
-                    int x = tpReadX();
-                    int y = tpReadY();
+                    int x = ((float)SCREEN_WIDTH-((float)tpReadX()*2.0f))*TP_W_FIX;
+                    int y = ((float)tpReadY()/2.0f)*TP_H_FIX;
                   
                     // Last coordinates
                     int dx = x - m_MouseX;
