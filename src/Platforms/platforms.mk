@@ -3,5 +3,4 @@ ifeq ($(GWENLIB),)
 	GWENLIB =	$(CHIBIOS)/ext/gwen
 endif
 
-GWENSRC += $(GWENLIB)/src/Platforms/ChibiOS.cpp \
-		$(GWENLIB)/src/Platforms/Null.cpp
+GWENSRC += $(GWENLIB)/src/Platforms/ChibiOS.cpp
