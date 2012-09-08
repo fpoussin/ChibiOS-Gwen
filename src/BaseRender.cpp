@@ -29,19 +29,19 @@ namespace Gwen
 				GetCTT()->ShutDown();
 		}
 
-		void Base::RenderText( Gwen::Font* pFont, Gwen::Point pos, const Gwen::String& text )
+		void Base::RenderText( Gwen::Font* pFont, Gwen::Point pos, const Gwen::String& text ) const
 		{
 			Gwen::UnicodeString str = Gwen::Utility::StringToUnicode( text );
 			RenderText( pFont, pos, str );
 		}
 
-		Gwen::Point Base::MeasureText( Gwen::Font* pFont, const Gwen::String& text )
+		Gwen::Point Base::MeasureText( Gwen::Font* pFont, const Gwen::String& text ) const
 		{
 			Gwen::UnicodeString str = Gwen::Utility::StringToUnicode( text );
 			return MeasureText( pFont, str );
 		}
 				
-        void Base::DrawLinedRect( Gwen::Rect const& rect )
+        void Base::DrawLinedRect( Gwen::Rect const& rect ) const
 		{
 			DrawFilledRect( Gwen::Rect( rect.x, rect.y, rect.w, 1 ) );
 			DrawFilledRect( Gwen::Rect( rect.x, rect.y + rect.h-1, rect.w, 1 ) );
@@ -50,12 +50,12 @@ namespace Gwen
 			DrawFilledRect( Gwen::Rect( rect.x + rect.w-1, rect.y, 1, rect.h ) );
 		};
 
-        void Base::DrawPixel( int const& x, int const& y )
+        void Base::DrawPixel( int const& x, int const& y ) const
 		{
 			DrawFilledRect( Gwen::Rect( x, y, 1, 1 ) );
 		}
 
-        void Base::DrawShavedCornerRect( Gwen::Rect rect, bool bSlight )
+        void Base::DrawShavedCornerRect( Gwen::Rect rect, bool bSlight ) const
 		{
 			// Draw INSIDE the w/h.
 			rect.w -= 1;
@@ -162,7 +162,7 @@ namespace Gwen
 			we just draw some rects where the letters would be to give them an idea.
 		*/
 
-		void Base::RenderText( Gwen::Font* pFont, Gwen::Point pos, const Gwen::UnicodeString& text )
+		void Base::RenderText( Gwen::Font* pFont, Gwen::Point pos, const Gwen::UnicodeString& text ) const
 		{
 			float fSize = pFont->size * Scale();
 
@@ -209,7 +209,7 @@ namespace Gwen
 			}
 		}
 
-		Gwen::Point Base::MeasureText( Gwen::Font* pFont, const Gwen::UnicodeString& text )
+		Gwen::Point Base::MeasureText( Gwen::Font* pFont, const Gwen::UnicodeString& text ) const
 		{
 			Gwen::Point p;
 			p.x = pFont->size * Scale() * (float)text.length() * 0.4;

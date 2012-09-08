@@ -108,18 +108,19 @@ namespace Gwen
             DrawFilledRect( pTargetRect );
         }
 
-        /*
-            If they haven't defined these font functions in their renderer code
-            we just draw some rects where the letters would be to give them an idea.
-        */
-
-        void ChibiGFX::RenderText( Gwen::Font* pFont, Gwen::Point pos, const Gwen::UnicodeString& text )
+        void ChibiGFX::RenderText( Gwen::Font* pFont, Gwen::Point pos, const Gwen::UnicodeString& text ) const
         {
             float fSize = pFont->size * Scale();
             gdispDrawString(pos.x, pos.y, Gwen::Utility::UnicodeToString(text).c_str(), &fontUI2, RGB2Color(m_color));
         }
+	
+        void ChibiGFX::RenderText( Gwen::Font* pFont, Gwen::Point pos, const Gwen::String& text ) const
+        {
+            float fSize = pFont->size * Scale();
+            gdispDrawString(pos.x, pos.y, text.c_str(), &fontUI2, RGB2Color(m_color));
+        }
 
-        Gwen::Point ChibiGFX::MeasureText( Gwen::Font* pFont, const Gwen::UnicodeString& text )
+        Gwen::Point ChibiGFX::MeasureText( Gwen::Font* pFont, const Gwen::UnicodeString& text ) const
         {
             Gwen::Point p;
             //p.x = pFont->size * Scale() * (float)text.length() * 0.4;

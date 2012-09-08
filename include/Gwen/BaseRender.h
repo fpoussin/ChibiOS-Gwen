@@ -50,7 +50,7 @@ namespace Gwen
 
                 virtual void SetDrawColor( Color const& color ){};
 
-                virtual void DrawFilledRect( Gwen::Rect const& rect ){};;
+                virtual void DrawFilledRect( Gwen::Rect const& rect ) const{};
 
 				virtual void StartClip(){};
 				virtual void EndClip(){};
@@ -65,18 +65,18 @@ namespace Gwen
 
 				virtual void LoadFont( Gwen::Font* pFont ){};
 				virtual void FreeFont( Gwen::Font* pFont ){};
-				virtual void RenderText( Gwen::Font* pFont, Gwen::Point pos, const Gwen::UnicodeString& text );
-				virtual Gwen::Point MeasureText( Gwen::Font* pFont, const Gwen::UnicodeString& text );
+				virtual void RenderText( Gwen::Font* pFont, Gwen::Point pos, const Gwen::UnicodeString& text ) const;
+				virtual Gwen::Point MeasureText( Gwen::Font* pFont, const Gwen::UnicodeString& text ) const;
 
 				//
 				// No need to implement these functions in your derived class, but if 
 				// you can do them faster than the default implementation it's a good idea to.
 				//
-                virtual void DrawLinedRect( Gwen::Rect const& rect );
-                virtual void DrawPixel( int const& x, int const& y );
-                virtual void DrawShavedCornerRect( Gwen::Rect rect, bool bSlight = false );
-				virtual Gwen::Point MeasureText( Gwen::Font* pFont, const Gwen::String& text );
-				virtual void RenderText( Gwen::Font* pFont, Gwen::Point pos, const Gwen::String& text );
+                virtual void DrawLinedRect( Gwen::Rect const& rect ) const;
+                virtual void DrawPixel( int const& x, int const& y ) const;
+                virtual void DrawShavedCornerRect( Gwen::Rect rect, bool bSlight = false ) const;
+				virtual Gwen::Point MeasureText( Gwen::Font* pFont, const Gwen::String& text ) const;
+				virtual void RenderText( Gwen::Font* pFont, Gwen::Point pos, const Gwen::String& text ) const;
 
 			public:
 
