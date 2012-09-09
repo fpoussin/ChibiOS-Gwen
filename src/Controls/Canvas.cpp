@@ -213,7 +213,7 @@ bool Canvas::InputKey( int iKey, bool bDown )
 
 	return Gwen::Input::OnKeyEvent( this, iKey, bDown );
 }
-
+#ifndef GWEN_NO_UNICODE
 bool Canvas::InputCharacter( Gwen::UnicodeChar chr )
 {
 	if ( Hidden() ) return false;
@@ -231,6 +231,25 @@ bool Canvas::InputCharacter( Gwen::UnicodeChar chr )
 
 	return KeyboardFocus->OnChar( chr );
 }
+#else
+bool Canvas::InputCharacter( char chr )
+{
+	if ( Hidden() ) return false;
+	if ( !isprint( chr ) ) return false;
+
+	//Handle Accelerators
+	if ( Gwen::Input::HandleAccelerator( this, chr ) )
+		return true;
+
+	//Handle characters
+	if ( !Gwen::KeyboardFocus ) return false;
+	if ( Gwen::KeyboardFocus->GetCanvas() != this ) return false;
+	if ( !Gwen::KeyboardFocus->Visible() ) return false;
+	if ( Gwen::Input::IsControlDown() ) return false; 
+
+	return KeyboardFocus->OnChar( chr );
+}
+#endif
 
 bool Canvas::InputMouseWheel( int val )
 {

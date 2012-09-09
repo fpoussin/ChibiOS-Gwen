@@ -12,7 +12,7 @@
 using namespace Gwen;
 using namespace Gwen::Controls;
 
-class GWEN_EXPORT RightArrow : public Controls::Base
+class  RightArrow : public Controls::Base
 {
 	public:
 
@@ -170,9 +170,14 @@ void MenuItem::SetAccelerator( const TextObject& strAccelerator )
 		m_Accelerator->DelayedDelete();
 		m_Accelerator = NULL;
 	}
-
+#ifndef GWEN_NO_UNICODE
 	if ( strAccelerator.GetUnicode() == L"" )
 		return;
+#else
+	if ( strAccelerator.Get() == "" )
+		return;
+#endif
+
 
 	m_Accelerator = new Controls::Label( this );
 	m_Accelerator->Dock( Pos::Right );

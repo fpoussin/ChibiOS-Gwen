@@ -19,7 +19,7 @@ namespace Gwen
 		{
 			class Table;
 
-			class GWEN_EXPORT TableRow : public Base
+			class  TableRow : public Base
 			{
 				static const int MaxColumns = 16;
 
@@ -148,7 +148,7 @@ namespace Gwen
 
 			};
 
-			class GWEN_EXPORT Table : public Base
+			class  Table : public Base
 			{
 				public:
 

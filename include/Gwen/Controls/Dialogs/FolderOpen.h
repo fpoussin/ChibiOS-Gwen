@@ -18,7 +18,7 @@ namespace Gwen
 		// If bUseSystem is used, it may use the system's modal dialog - which
 		// will steal focus and pause the rest of GWEN until it's continued.
 		//
-		void GWEN_EXPORT FolderOpenEx( bool bUseSystem, const String& Name, const String& StartPath, Gwen::Event::Handler* pHandler = NULL, Gwen::Event::Handler::FunctionWithInformation fnCallback = NULL );
+		void  FolderOpenEx( bool bUseSystem, const String& Name, const String& StartPath, Gwen::Event::Handler* pHandler = NULL, Gwen::Event::Handler::FunctionWithInformation fnCallback = NULL );
 
 		//
 		// Templated function simply to avoid having to manually cast the callback function.

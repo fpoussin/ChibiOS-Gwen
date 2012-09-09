@@ -4,7 +4,6 @@
 	See license in Gwen.h
 */
 
-#pragma once
 #ifndef GWEN_CONTROLS_LABEL_H
 #define GWEN_CONTROLS_LABEL_H
 
@@ -16,7 +15,7 @@ namespace Gwen
 {
 	namespace Controls
 	{
-		class GWEN_EXPORT Label : public Controls::Base
+		class  Label : public Controls::Base
 		{
 			public:
 
@@ -36,9 +35,12 @@ namespace Gwen
 				virtual void SetAlignment( int iAlign );
 				virtual int GetAlignment();
 				
-
+#ifndef GWEN_NO_UNICODE
 				virtual void SetFont( Gwen::UnicodeString strFacename, int iSize, bool bBold );
-
+#else
+				virtual void SetFont( Gwen::String strFacename, int iSize, bool bBold );	
+#endif
+					
 				virtual void SetFont( Gwen::Font* pFont ){ m_Text->SetFont( pFont ); }
 				virtual Gwen::Font* GetFont(){ return m_Text->GetFont(); }
 				virtual void SetTextColor( const Gwen::Color& col ){ m_Text->SetTextColor( col ); }

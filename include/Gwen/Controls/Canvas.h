@@ -16,7 +16,7 @@ namespace Gwen
 {
 	namespace Controls
 	{
-		class GWEN_EXPORT Canvas : public Base
+		class  Canvas : public Base
 		{
 			public:
 
@@ -77,7 +77,11 @@ namespace Gwen
 				virtual bool InputMouseMoved( int x, int y, int deltaX, int deltaY );
 				virtual bool InputMouseButton( int iButton, bool bDown );
 				virtual bool InputKey( int iKey, bool bDown );
+#ifndef GWEN_NO_UNICODE
 				virtual bool InputCharacter( Gwen::UnicodeChar chr );
+#else
+				virtual bool InputCharacter( char chr );
+#endif				
 				virtual bool InputMouseWheel( int val );
 				virtual bool InputQuit(){ return true; };
 

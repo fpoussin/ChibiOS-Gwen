@@ -58,23 +58,28 @@ namespace Gwen
 	
 
 		// For use in panels
-		bool GWEN_EXPORT IsKeyDown( int iKey );
-		bool GWEN_EXPORT IsLeftMouseDown();
-		bool GWEN_EXPORT IsRightMouseDown();
-		Gwen::Point GWEN_EXPORT GetMousePosition();
+		bool  IsKeyDown( int iKey );
+		bool  IsLeftMouseDown();
+		bool  IsRightMouseDown();
+		Gwen::Point  GetMousePosition();
 
 		inline bool IsShiftDown(){ return IsKeyDown( Gwen::Key::Shift ); }
 		inline bool IsControlDown(){ return IsKeyDown( Gwen::Key::Control ); }
 
 		// Does copy, paste etc
-		bool GWEN_EXPORT DoSpecialKeys( Controls::Base* pCanvas, Gwen::UnicodeChar chr );
-		bool GWEN_EXPORT HandleAccelerator( Controls::Base* pCanvas, Gwen::UnicodeChar chr );
+#ifndef GWEN_NO_UNICODE
+		bool  DoSpecialKeys( Controls::Base* pCanvas, Gwen::UnicodeChar chr );
+		bool  HandleAccelerator( Controls::Base* pCanvas, Gwen::UnicodeChar chr );
+#else
+		bool  DoSpecialKeys( Controls::Base* pCanvas, char chr );
+		bool  HandleAccelerator( Controls::Base* pCanvas, char chr );
+#endif
 
 		// Send input to canvas for study		
-		void GWEN_EXPORT OnMouseMoved( Controls::Base* pCanvas, int x, int y, int deltaX, int deltaY );
-		bool GWEN_EXPORT OnMouseClicked( Controls::Base* pCanvas, int iButton, bool bDown );
-		bool GWEN_EXPORT OnKeyEvent( Controls::Base* pCanvas, int iKey, bool bDown );
-		void GWEN_EXPORT OnCanvasThink( Controls::Base* pControl );
+		void  OnMouseMoved( Controls::Base* pCanvas, int x, int y, int deltaX, int deltaY );
+		bool  OnMouseClicked( Controls::Base* pCanvas, int iButton, bool bDown );
+		bool  OnKeyEvent( Controls::Base* pCanvas, int iKey, bool bDown );
+		void  OnCanvasThink( Controls::Base* pControl );
 
 		
 	};

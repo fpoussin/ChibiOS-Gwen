@@ -1,6 +1,6 @@
 #pragma once
-#ifndef GWEN_SKINS_SIMPLE_H
-#define GWEN_SKINS_SIMPLE_H
+#ifndef GWEN_SKINS_LIGHT_H
+#define GWEN_SKINS_LIGHT_H
 
 #include "Gwen/Skin.h"
 #include "Gwen/Gwen.h"
@@ -10,11 +10,11 @@ namespace Gwen
 {
 	namespace Skin
 	{
-		class Simple : public Gwen::Skin::Base
+		class Light : public Gwen::Skin::Base
 		{
 			public:
 
-				Simple( Gwen::Renderer::Base* renderer ) : Gwen::Skin::Base( renderer )
+				Light( Gwen::Renderer::Base* renderer ) : Gwen::Skin::Base( renderer )
 				{
 
 				}
@@ -36,7 +36,7 @@ namespace Gwen
 				Gwen::Color m_colToolTipBorder;
 				Gwen::Color m_colModal;
 
-				Simple()
+				Light()
 				{
 					m_colBorderColor			= Gwen::Color( 80, 80, 80, 255 );
 					m_colBG						= Gwen::Color( 248, 248, 248, 255 );
@@ -58,7 +58,6 @@ namespace Gwen
 					m_colToolTipBorder			= Gwen::Color( 0, 0, 0, 255 );
 
 					m_colModal = Gwen::Color( 25, 25, 25, 150 );
-
 #ifndef GWEN_NO_UNICODE
 					m_DefaultFont.facename	= L"Microsoft Sans Serif";
 #else
@@ -187,17 +186,17 @@ namespace Gwen
 					if ( !bDepressed )
 					{
 						m_Render->SetDrawColor( m_colControlBright );
-						m_Render->DrawShavedCornerRect( Gwen::Rect( 1, 1, w-2, h-2 ), bSquared );
+						//m_Render->DrawShavedCornerRect( Gwen::Rect( 1, 1, w-2, h-2 ), bSquared );
 					}
 					else
 					{
 						m_Render->SetDrawColor( m_colControlDarker );
-						m_Render->DrawShavedCornerRect( Gwen::Rect( 1, 1, w-2, h-2 ), bSquared );
+						//m_Render->DrawShavedCornerRect( Gwen::Rect( 1, 1, w-2, h-2 ), bSquared );
 					}
 
 					// Border
 					m_Render->SetDrawColor( m_colControlOutlineNormal );
-					m_Render->DrawShavedCornerRect( Gwen::Rect( 0, 0, w, h ), bSquared );
+					//m_Render->DrawShavedCornerRect( Gwen::Rect( 0, 0, w, h ), bSquared );
 				}
 
 				virtual void DrawRadioButton( Gwen::Controls::Base* control, bool bSelected, bool bDepressed)
@@ -214,7 +213,7 @@ namespace Gwen
 					if ( control->IsHovered() )	m_Render->SetDrawColor( Gwen::Color( 85, 130, 164, 255 ) );
 					else m_Render->SetDrawColor( m_colControlOutlineLight );
 
-					m_Render->DrawShavedCornerRect( rect );
+					//m_Render->DrawShavedCornerRect( rect );
 
 					m_Render->SetDrawColor( Gwen::Color(   0,  50,  60, 15 ) );
 					m_Render->DrawFilledRect( Gwen::Rect( rect.x+2, rect.y+2, rect.w-4, rect.h-4 ) );
@@ -348,11 +347,11 @@ namespace Gwen
 					m_Render->DrawFilledRect( Gwen::Rect( 1, rect.h*0.5, rect.w-2, rect.h*0.5-1 ) );
 
 					m_Render->SetDrawColor( m_colControlBright );
-					m_Render->DrawShavedCornerRect( Gwen::Rect( 1, 1, rect.w-2, rect.h ) );
+					//m_Render->DrawShavedCornerRect( Gwen::Rect( 1, 1, rect.w-2, rect.h ) );
 
 					m_Render->SetDrawColor( m_colBorderColor );
 
-					m_Render->DrawShavedCornerRect( Gwen::Rect( 0, 0, rect.w, rect.h ) );
+					//m_Render->DrawShavedCornerRect( Gwen::Rect( 0, 0, rect.w, rect.h ) );
 				}
 
 				virtual void DrawTabControl( Gwen::Controls::Base* control )
@@ -391,7 +390,7 @@ namespace Gwen
 
 					// Light inner border
 					m_Render->SetDrawColor( Gwen::Color( 255, 255, 255, 100 ) );
-					m_Render->DrawShavedCornerRect( Gwen::Rect( rect.x+1, rect.y+1, rect.w-2, rect.h-2 ) );		
+					//m_Render->DrawShavedCornerRect( Gwen::Rect( rect.x+1, rect.y+1, rect.w-2, rect.h-2 ) );		
 
 					// Dark line between titlebar and main
 					m_Render->SetDrawColor( m_colBorderColor );
@@ -402,7 +401,7 @@ namespace Gwen
 
 					// Dark outer border
 					m_Render->SetDrawColor( m_colBorderColor );
-					m_Render->DrawShavedCornerRect( Gwen::Rect( rect.x, rect.y, rect.w, rect.h ) );		
+					//m_Render->DrawShavedCornerRect( Gwen::Rect( rect.x, rect.y, rect.w, rect.h ) );		
 				}
 
 				virtual void DrawHighlight( Gwen::Controls::Base* control )
@@ -473,13 +472,13 @@ namespace Gwen
 					}
 
 					m_Render->SetDrawColor( Gwen::Color( 255, 255, 255, 150 ) );
-					m_Render->DrawShavedCornerRect( Gwen::Rect( 1, 1, rect.w-2, rect.h-2 ) );
+					//m_Render->DrawShavedCornerRect( Gwen::Rect( 1, 1, rect.w-2, rect.h-2 ) );
 
 					m_Render->SetDrawColor( Gwen::Color( 255, 255, 255, 70 ) );
-					m_Render->DrawShavedCornerRect( Gwen::Rect( 2, 2, rect.w-4, rect.h-4 ) );
+					//m_Render->DrawShavedCornerRect( Gwen::Rect( 2, 2, rect.w-4, rect.h-4 ) );
 
 					m_Render->SetDrawColor( m_colBorderColor );
-					m_Render->DrawShavedCornerRect( rect );	
+					//m_Render->DrawShavedCornerRect( rect );	
 				}
 		 
 				virtual void DrawListBox( Gwen::Controls::Base* control )

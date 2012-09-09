@@ -103,8 +103,11 @@ void PageControl::ShowPage( unsigned int i )
 
 	m_Back->SetDisabled( m_iCurrentPage == 0 );
 	m_Next->SetDisabled( m_iCurrentPage >= m_iPages );
-
+#ifndef GWEN_NO_UNICODE
 	m_Label->SetText( Utility::Format( L"Page %i of %i", m_iCurrentPage+1, m_iPages ) );
+#else
+	m_Label->SetText( Utility::Format( "Page %i of %i", m_iCurrentPage+1, m_iPages ) );
+#endif
 
 	if ( GetUseFinishButton() )
 	{

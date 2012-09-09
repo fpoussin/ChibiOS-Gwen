@@ -36,7 +36,7 @@ namespace Gwen
 
 		};
 
-		class GWEN_EXPORT Base
+		class  Base
 		{
 			public:
 
@@ -55,19 +55,20 @@ namespace Gwen
 				virtual void StartClip(){};
 				virtual void EndClip(){};
 
-				virtual void LoadTexture( Gwen::Texture* pTexture ){};
-				virtual void FreeTexture( Gwen::Texture* pTexture ){};
-				virtual void DrawTexturedRect( Gwen::Texture* pTexture, Gwen::Rect pTargetRect, float u1=0.0f, float v1=0.0f, float u2=1.0f, float v2=1.0f ){};
+				virtual void LoadTexture( Gwen::Texture* pTexture ){ (void*) pTexture; };
+				virtual void FreeTexture( Gwen::Texture* pTexture ){ (void*) pTexture; };
+				virtual void DrawTexturedRect( Gwen::Texture* pTexture, Gwen::Rect pTargetRect, float u1=0.0f, float v1=0.0f, float u2=1.0f, float v2=1.0f ){ (void*) pTexture; };
 				virtual void DrawMissingImage( Gwen::Rect pTargetRect );
 				virtual Gwen::Color PixelColour( Gwen::Texture* pTexture, unsigned int x, unsigned int y, const Gwen::Color& col_default = Gwen::Color( 255, 255, 255, 255 ) ){ return col_default; }
 
 				virtual ICacheToTexture* GetCTT() { return NULL; }
 
-				virtual void LoadFont( Gwen::Font* pFont ){};
-				virtual void FreeFont( Gwen::Font* pFont ){};
+				virtual void LoadFont( Gwen::Font* pFont ){ (void*) pFont; };
+				virtual void FreeFont( Gwen::Font* pFont ){ (void*) pFont; };
+#ifndef GWEN_NO_UNICODE
 				virtual void RenderText( Gwen::Font* pFont, Gwen::Point pos, const Gwen::UnicodeString& text ) const;
 				virtual Gwen::Point MeasureText( Gwen::Font* pFont, const Gwen::UnicodeString& text ) const;
-
+#endif
 				//
 				// No need to implement these functions in your derived class, but if 
 				// you can do them faster than the default implementation it's a good idea to.

@@ -4,7 +4,6 @@
 	See license in Gwen.h
 */
 
-#pragma once
 #ifndef GWEN_CONTROLS_PROPERTY_CHECKBOX_H
 #define GWEN_CONTROLS_PROPERTY_CHECKBOX_H
 
@@ -17,7 +16,7 @@ namespace Gwen
 	{
 		namespace Property
 		{
-			class GWEN_EXPORT Checkbox : public Property::Base
+			class  Checkbox : public Property::Base
 			{
 				public:
 
@@ -35,12 +34,20 @@ namespace Gwen
 
 					virtual TextObject GetPropertyValue()
 					{
+#ifndef GWEN_NO_UNICODE
 						return m_Checkbox->IsChecked() ? L"1" : L"0";
+#else
+						return m_Checkbox->IsChecked() ? "1" : "0";
+#endif
 					}
 
 					virtual void SetPropertyValue( const TextObject& v, bool bFireChangeEvents )
 					{
+#ifndef GWEN_NO_UNICODE
 						if ( v == L"1" || v == L"true" || v == L"TRUE" || v == L"yes" || v == L"YES" )
+#else
+						if ( v == "1" || v == "true" || v == "TRUE" || v == "yes" || v == "YES" )
+#endif
 							return m_Checkbox->SetChecked( true );
 
 						return m_Checkbox->SetChecked( false );

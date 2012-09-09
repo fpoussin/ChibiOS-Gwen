@@ -24,7 +24,10 @@ namespace Gwen
 		public:
 
 			TextObject(){}
+				
+			operator const Gwen::String&(){ return m_String; }
 
+#ifndef GWEN_NO_UNICODE
 			TextObject( const Gwen::String& text )
 			{
 				m_String = text;
@@ -42,13 +45,12 @@ namespace Gwen
 				m_Unicode = text;
 				m_String = Gwen::Utility::UnicodeToString( m_Unicode );
 			}
-
+			
 			TextObject( const Gwen::UnicodeString& unicode )
 			{
 				*this = unicode;
 			}
 
-			operator const Gwen::String&(){ return m_String; }
 			operator const Gwen::UnicodeString&(){ return m_Unicode; }
 		
 			void operator = ( const char* str )
@@ -73,7 +75,38 @@ namespace Gwen
 			{
 				return m_Unicode == to.m_Unicode;
 			}
+			
+			const Gwen::UnicodeString& GetUnicode() const
+			{
+				return m_Unicode;
+			}
+#else			
+			TextObject( const Gwen::String& text )
+			{
+				m_String = text;
+			}
 
+			TextObject( const char* text )
+			{
+				m_String = text;
+			}
+		
+			void operator = ( const char* str )
+			{
+				m_String = str;
+			}
+
+			void operator = ( const Gwen::String& str )
+			{
+				m_String = str;
+			}
+
+			bool operator == ( const TextObject& to ) const
+			{
+				return m_String == to.m_String;
+			}
+			
+#endif
 			const Gwen::String& Get() const
 			{
 				return m_String;
@@ -84,14 +117,12 @@ namespace Gwen
 				return m_String.c_str();
 			}
 
-			const Gwen::UnicodeString& GetUnicode() const
-			{
-				return m_Unicode;
-			}
-
+#ifndef GWEN_NO_UNICODE
 			int length() const { return m_Unicode.length(); }
-
 			Gwen::UnicodeString		m_Unicode;
+#else			
+			int length() const { return m_String.length(); }
+#endif		
 			Gwen::String			m_String;
 	};
 }

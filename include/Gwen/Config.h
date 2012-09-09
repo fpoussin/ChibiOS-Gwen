@@ -8,10 +8,15 @@
 #ifndef GWEN_CONFIG_H
 #define GWEN_CONFIG_H
 
-//
-// Disables animation functions.
-//
+/*
+* Disables animation functions.
+*/
 //#define GWEN_NO_ANIMATION
+
+/*
+* Disables unicode support.
+*/
+#define GWEN_NO_UNICODE
 
 #endif
 

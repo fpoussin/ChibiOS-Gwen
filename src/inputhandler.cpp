@@ -22,7 +22,11 @@ struct Action
 	unsigned char type;
 
 	int x, y;
+#ifndef GWEN_NO_UNICODE
 	Gwen::UnicodeChar chr;
+#else
+	char chr;
+#endif
 };
 
 static const float KeyRepeatRate = 0.03f;
@@ -269,6 +273,7 @@ bool Gwen::Input::OnMouseClicked( Controls::Base* pCanvas, int iMouseButton, boo
 	return false;
 }
 
+#ifndef GWEN_NO_UNICODE
 bool Gwen::Input::HandleAccelerator( Controls::Base* pCanvas, Gwen::UnicodeChar chr )
 {
 	//Build the accelerator search string
@@ -331,7 +336,70 @@ bool Gwen::Input::DoSpecialKeys( Controls::Base* pCanvas, Gwen::UnicodeChar chr 
 	
 	return false;
 }
+#else
+bool Gwen::Input::HandleAccelerator( Controls::Base* pCanvas, char chr )
+{
+	//Build the accelerator search string
+	Gwen::String accelString;
 
+	if ( Gwen::Input::IsControlDown() )
+		accelString += "CTRL+";
+
+	if ( Gwen::Input::IsShiftDown() )
+		accelString += "SHIFT+";
+
+    chr = toupper( chr );
+
+	accelString += chr;
+
+	//Debug::Msg("Accelerator string :%S\n", accelString.c_str());
+
+	if ( Gwen::KeyboardFocus && Gwen::KeyboardFocus->HandleAccelerator( accelString ) )
+		return true;
+
+	if ( Gwen::MouseFocus && Gwen::MouseFocus->HandleAccelerator( accelString ) )
+		return true;
+
+	if ( pCanvas->HandleAccelerator( accelString ) )
+		return true;
+
+	return false;
+}
+
+bool Gwen::Input::DoSpecialKeys( Controls::Base* pCanvas, char chr )
+{
+	if ( !Gwen::KeyboardFocus ) return false;
+	if ( Gwen::KeyboardFocus->GetCanvas() != pCanvas ) return false;
+	if ( !Gwen::KeyboardFocus->Visible() ) return false;
+	if ( !Gwen::Input::IsControlDown() ) return false;
+
+	if ( chr == 'C' || chr == 'c' )
+	{
+		Gwen::KeyboardFocus->OnCopy(NULL);
+		return true;
+	}
+
+	if ( chr == 'V' || chr == 'v' )
+	{
+		Gwen::KeyboardFocus->OnPaste(NULL);
+		return true;
+	}
+
+	if ( chr == 'X' || chr == 'x' )
+	{
+		Gwen::KeyboardFocus->OnCut(NULL);
+		return true;
+	}
+
+	if ( chr == 'A' || chr == 'a' )
+	{
+		Gwen::KeyboardFocus->OnSelectAll(NULL);
+		return true;
+	}
+	
+	return false;
+}
+#endif
 bool Gwen::Input::OnKeyEvent( Controls::Base* pCanvas, int iKey, bool bDown )
 {
 	Gwen::Controls::Base* pTarget = Gwen::KeyboardFocus;

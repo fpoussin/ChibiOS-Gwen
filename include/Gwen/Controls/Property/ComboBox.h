@@ -17,7 +17,7 @@ namespace Gwen
 	{
 		namespace Property
 		{
-			class GWEN_EXPORT ComboBox : public Property::Base
+			class  ComboBox : public Property::Base
 			{
 				public:
 
@@ -36,7 +36,11 @@ namespace Gwen
 					virtual TextObject GetPropertyValue()
 					{
 						Gwen::Controls::Label* pControl = m_ComboBox->GetSelectedItem();
+#ifndef GWEN_NO_UNICODE
 						if ( !pControl ) return L"";
+#else
+						if ( !pControl ) return "";
+#endif
 
 						return pControl->GetName();
 					}

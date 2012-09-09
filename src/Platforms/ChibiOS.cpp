@@ -11,7 +11,7 @@
 #include "hal.h"
 #include "gdisp_connector.h"
 
-static Gwen::UnicodeString gs_ClipboardEmulator;
+
 
 void Gwen::Platform::Sleep( unsigned int iMS )
 {
@@ -22,6 +22,8 @@ void Gwen::Platform::SetCursor( unsigned char iCursor )
 {
 	// No platform independent way to do this
 }
+#ifndef GWEN_NO_UNICODE
+static Gwen::UnicodeString gs_ClipboardEmulator;
 
 Gwen::UnicodeString Gwen::Platform::GetClipboardText()
 {
@@ -33,6 +35,20 @@ bool Gwen::Platform::SetClipboardText( const Gwen::UnicodeString& str )
 	gs_ClipboardEmulator = str;
 	return true;
 }
+#else
+static Gwen::String gs_ClipboardEmulator;
+
+Gwen::String Gwen::Platform::GetClipboardText()
+{
+	return gs_ClipboardEmulator;
+}
+
+bool Gwen::Platform::SetClipboardText( const Gwen::String& str )
+{
+	gs_ClipboardEmulator = str;
+	return true;
+}
+#endif
 
 float Gwen::Platform::GetTimeInSeconds()
 {
@@ -97,7 +113,7 @@ bool Gwen::Platform::HasFocusPlatformWindow( void* pPtr )
 
 void Gwen::Platform::GetDesktopSize( int& w, int &h )
 {
-  w = gdispGetWidth();
+	w = gdispGetWidth();
 	h = gdispGetHeight();
 }
 

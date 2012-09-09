@@ -16,7 +16,7 @@ namespace Gwen
 	{
 		namespace Layout
 		{
-			class GWEN_EXPORT Tile : public Base
+			class  Tile : public Base
 			{
 			public:
 

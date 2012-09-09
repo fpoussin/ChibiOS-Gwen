@@ -13,7 +13,7 @@ using namespace Gwen;
 using namespace Gwen::Controls;
 using namespace Gwen::ControlsInternal;
 
-class GWEN_EXPORT DownArrow : public Controls::Base
+class  DownArrow : public Controls::Base
 {
 	public:
 
@@ -56,14 +56,18 @@ GWEN_CONTROL_CONSTRUCTOR( ComboBox )
 	m_SelectedItem = NULL;
 
 	SetAlignment( Gwen::Pos::Left | Gwen::Pos::CenterV );
+#ifndef GWEN_NO_UNICODE
 	SetText( L"" );
+#else
+	SetText( "" );
+#endif
 	SetMargin( Margin( 3, 0, 0, 0 ) );
 
 	SetTabable( true );
 	SetKeyboardInputEnabled( true );
 
 }
-
+#ifndef GWEN_NO_UNICODE
 MenuItem* ComboBox::AddItem( const UnicodeString& strLabel, const String& strName )
 {
 	MenuItem* pItem = m_Menu->AddItem( strLabel, L"" );
@@ -77,7 +81,21 @@ MenuItem* ComboBox::AddItem( const UnicodeString& strLabel, const String& strNam
 
 	return pItem;
 }
+#else
+MenuItem* ComboBox::AddItem( const String& strLabel, const String& strName )
+{
+	MenuItem* pItem = m_Menu->AddItem( strLabel, "" );
+	pItem->SetName( strName );
 
+	pItem->onMenuItemSelected.Add( this, &ComboBox::OnItemSelected );
+
+	//Default
+	if ( m_SelectedItem == NULL )
+		OnItemSelected( pItem );
+
+	return pItem;
+}
+#endif
 void ComboBox::Render( Skin::Base* skin )
 {
 	if ( !ShouldDrawBackground() ) return;

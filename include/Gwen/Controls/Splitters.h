@@ -14,7 +14,7 @@ namespace Gwen
 {
 	namespace Controls
 	{
-		class GWEN_EXPORT SplitterVertical : public Controls::Base
+		class  SplitterVertical : public Controls::Base
 		{
 			GWEN_CONTROL_INLINE( SplitterVertical, Controls::Base )
 			{
@@ -92,7 +92,7 @@ namespace Gwen
 			unsigned int			m_SplitterSize;
 		};
 
-		class GWEN_EXPORT SplitterHorizontal : public SplitterVertical
+		class  SplitterHorizontal : public SplitterVertical
 		{
 			GWEN_CONTROL_INLINE( SplitterHorizontal, SplitterVertical )
 			{

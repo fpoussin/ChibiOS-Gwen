@@ -24,16 +24,20 @@ namespace Gwen
 
 		class PropertyRow;
 
-		class GWEN_EXPORT Properties : public Base
+		class  Properties : public Base
 		{
 			public:
 
 				GWEN_CONTROL( Properties, Base );
 
 				virtual void PostLayout( Gwen::Skin::Base* skin );
-
+#ifndef GWEN_NO_UNICODE
 				PropertyRow* Add( const TextObject& text, const TextObject& value = L"" );
 				PropertyRow* Add( const TextObject& text, Property::Base* pProp, const TextObject& value = L"" );
+#else
+				PropertyRow* Add( const TextObject& text, const TextObject& value = "" );
+				PropertyRow* Add( const TextObject& text, Property::Base* pProp, const TextObject& value = "" );
+#endif
 				PropertyRow* Find( const TextObject& text );
 
 				virtual int GetSplitWidth();
@@ -48,7 +52,7 @@ namespace Gwen
 
 		};
 
-		class GWEN_EXPORT PropertyRow : public Base
+		class  PropertyRow : public Base
 		{
 			public:
 

@@ -58,8 +58,11 @@ void ColorPicker::NumericTyped( Gwen::Controls::Base* control )
 	TextBoxNumeric* box = gwen_cast<TextBoxNumeric>(control);
 	if (!box)
 		return;
-
+#ifndef GWEN_NO_UNICODE
 	if ( box->GetText() == L"")
+#else
+	if ( box->GetText() == "")
+#endif
 		return;
 
 	int textValue = atoi( box->GetText().c_str() );

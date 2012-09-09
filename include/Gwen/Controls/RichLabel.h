@@ -17,7 +17,7 @@ namespace Gwen
 {
 	namespace Controls
 	{
-		class GWEN_EXPORT RichLabel : public Controls::Base
+		class  RichLabel : public Controls::Base
 		{
 			public:
 
@@ -40,15 +40,24 @@ namespace Gwen
 					}
 
 					unsigned char			type;
+#ifndef GWEN_NO_UNICODE
 					Gwen::UnicodeString		text;
+#else
+					Gwen::String			text;
+#endif
 					Gwen::Color				color;
 					Gwen::Font*				font;
 				};
 
 				void Layout( Gwen::Skin::Base* skin );
-				void SplitLabel( const Gwen::UnicodeString& text, Gwen::Font* pFont, const DividedText& txt, int& x, int& y, int& lineheight );
 				void CreateNewline( int& x, int& y, int& lineheight );
+#ifndef GWEN_NO_UNICODE
+				void SplitLabel( const Gwen::UnicodeString& text, Gwen::Font* pFont, const DividedText& txt, int& x, int& y, int& lineheight );
 				void CreateLabel( const Gwen::UnicodeString& text, const DividedText& txt, int& x, int& y, int& lineheight, bool NoSplit );
+#else
+				void SplitLabel( const Gwen::String& text, Gwen::Font* pFont, const DividedText& txt, int& x, int& y, int& lineheight );
+				void CreateLabel( const Gwen::String& text, const DividedText& txt, int& x, int& y, int& lineheight, bool NoSplit );
+#endif
 				void Rebuild();
 
 				void OnBoundsChanged( Gwen::Rect oldBounds );

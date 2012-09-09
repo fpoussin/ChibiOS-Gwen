@@ -28,13 +28,17 @@ namespace Gwen
 			static const unsigned char Dot				= 3;
 		}
 
-		class GWEN_EXPORT Base
+		class  Base
 		{
 			public:
 
 				Base( Gwen::Renderer::Base* renderer = NULL )
 				{
+#ifndef GWEN_NO_UNICODE
 					m_DefaultFont.facename = L"Arial";
+#else
+					m_DefaultFont.facename = "Arial";
+#endif
 					m_DefaultFont.size = 10.0f;
 					m_Render = renderer;
 				}
@@ -239,7 +243,7 @@ namespace Gwen
 				{
 					return &m_DefaultFont;
 				}
-
+#ifndef GWEN_NO_UNICODE
 				virtual void SetDefaultFont( const Gwen::UnicodeString& strFacename, float fSize = 10.0f )
 				{
 					m_DefaultFont.facename = strFacename;
@@ -252,6 +256,20 @@ namespace Gwen
 					m_DefaultFont.data = data;
 					m_DefaultFont.size = fSize;
 				}
+#else
+				virtual void SetDefaultFont( const Gwen::String& strFacename, float fSize = 10.0f )
+				{
+					m_DefaultFont.facename = strFacename;
+					m_DefaultFont.size = fSize;
+				}
+				
+				virtual void SetDefaultFont( const Gwen::String& strFacename, void *data, float fSize = 10.0f )
+				{
+					m_DefaultFont.facename = strFacename;
+					m_DefaultFont.data = data;
+					m_DefaultFont.size = fSize;
+				}			
+#endif
 
 			protected:
 

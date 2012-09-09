@@ -19,7 +19,7 @@ namespace Gwen
 {
 	namespace Controls
 	{
-		class GWEN_EXPORT WindowCanvas : public Canvas, public Gwen::WindowProvider
+		class  WindowCanvas : public Canvas, public Gwen::WindowProvider
 		{
 			public:
 

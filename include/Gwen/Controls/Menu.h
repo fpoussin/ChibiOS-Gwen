@@ -4,7 +4,6 @@
 	See license in Gwen.h
 */
 
-#pragma once
 #ifndef GWEN_CONTROLS_MENU_H
 #define GWEN_CONTROLS_MENU_H
 
@@ -19,7 +18,7 @@ namespace Gwen
 	{
 		class MenuItem;
 
-		class GWEN_EXPORT Menu : public ScrollControl
+		class  Menu : public ScrollControl
 		{
 			public:
 
@@ -29,9 +28,11 @@ namespace Gwen
 				virtual void RenderUnder( Skin::Base* skin );
 
 				virtual void Layout( Skin::Base* skin );
-
+#ifndef GWEN_NO_UNICODE
 				virtual MenuItem* AddItem( const TextObject& strName, const TextObject& strIconName = L"", const TextObject& strAccelerator = L"" );
-
+#else
+				virtual MenuItem* AddItem( const TextObject& strName, const TextObject& strIconName = "", const TextObject& strAccelerator = "" );
+#endif
 				virtual void AddDivider();
 
 				void OnHoverItem( Gwen::Controls::Base* pControl );
@@ -61,7 +62,7 @@ namespace Gwen
 				bool m_bDeleteOnClose;
 		};
 
-		class GWEN_EXPORT MenuDivider : public Base
+		class  MenuDivider : public Base
 		{
 			public:
 

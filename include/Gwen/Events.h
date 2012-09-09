@@ -9,7 +9,6 @@
 #define GWEN_EVENTS_H
 
 #include <list>
-#include "Gwen/Exports.h"
 #include "Gwen/Structures.h"
 #include "Gwen/TextObject.h"
 #include "Gwen/ControlList.h"
@@ -36,7 +35,9 @@ namespace Gwen
 
 			Gwen::Controls::Base*	Control;
 			Gwen::String			String;
+#ifndef GWEN_NO_UNICODE
 			Gwen::UnicodeString		UnicodeString;
+#endif
 			int						Integer;
 			float					Float;
 			unsigned long long		UnsignedLongLong;
@@ -86,7 +87,7 @@ namespace Gwen
 		class Caller;
 
 		// A class must be derived from this 
-		class GWEN_EXPORT Handler
+		class  Handler
 		{
 			public:
 
@@ -114,7 +115,7 @@ namespace Gwen
 		//
 		//
 		//
-		class GWEN_EXPORT Caller
+		class  Caller
 		{
 			public:
 

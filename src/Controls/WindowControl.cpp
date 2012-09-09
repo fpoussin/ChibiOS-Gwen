@@ -123,12 +123,17 @@ void WindowControl::RenderUnder( Skin::Base* skin )
 	BaseClass::RenderUnder( skin );
 	skin->DrawShadow( this );
 }
-
+#ifndef GWEN_NO_UNICODE
 void WindowControl::SetTitle(Gwen::UnicodeString title)
 {
 	m_Title->SetText( title );
 }
-
+#else
+void WindowControl::SetTitle(Gwen::String title)
+{
+	m_Title->SetText( title );
+}
+#endif
 void WindowControl::SetClosable( bool closeable )
 {
 	m_CloseButton->SetHidden( !closeable );

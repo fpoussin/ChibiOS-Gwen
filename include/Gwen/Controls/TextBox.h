@@ -17,7 +17,7 @@ namespace Gwen
 {
 	namespace Controls
 	{
-		class GWEN_EXPORT TextBox : public Label
+		class  TextBox : public Label
 		{
 			GWEN_CONTROL( TextBox, Label );
 
@@ -28,10 +28,13 @@ namespace Gwen
 				#ifndef GWEN_NO_ANIMATION
 				virtual void UpdateCaretColor();
 				#endif
-
+#ifndef GWEN_NO_UNICODE
 				virtual bool OnChar( Gwen::UnicodeChar c );
-
 				virtual void InsertText( const Gwen::UnicodeString& str );
+#else					
+				virtual bool OnChar( char c );
+				virtual void InsertText( const Gwen::String& str );
+#endif					
 				virtual void DeleteText( int iStartPos, int iLength );
 
 				virtual void RefreshCursorBounds();
@@ -55,8 +58,11 @@ namespace Gwen
 
 				virtual void EraseSelection();
 				virtual bool HasSelection();
+#ifndef GWEN_NO_UNICODE
 				virtual UnicodeString GetSelection();
-
+#else
+				virtual String GetSelection();
+#endif
 				virtual void SetCursorPos( int i );
 				virtual void SetCursorEnd( int i );
 
@@ -80,8 +86,11 @@ namespace Gwen
 			protected:
 
 				virtual void OnTextChanged();
+#ifndef GWEN_NO_UNICODE
 				virtual bool IsTextAllowed( const Gwen::UnicodeString& /*str*/, int /*iPos*/ ){ return true; }
-
+#else
+				virtual bool IsTextAllowed( const Gwen::String& /*str*/, int /*iPos*/ ){ return true; }
+#endif
 				bool m_bSelectAll;
 
 				int m_iCursorPos;
@@ -95,7 +104,7 @@ namespace Gwen
 				Gwen::Color	m_CaretColor;
 		};
 
-		class GWEN_EXPORT TextBoxNumeric : public TextBox
+		class  TextBoxNumeric : public TextBox
 		{
 			public:
 
@@ -104,12 +113,14 @@ namespace Gwen
 				virtual float GetFloatFromText();
 
 			private:
-
+#ifndef GWEN_NO_UNICODE
 				virtual bool IsTextAllowed( const Gwen::UnicodeString& str, int iPos );
-			
+#else
+				virtual bool IsTextAllowed( const Gwen::String& str, int iPos );
+#endif		
 		};
 
-		class GWEN_EXPORT TextBoxMultiline : public TextBox
+		class  TextBoxMultiline : public TextBox
 		{
 			public:
 

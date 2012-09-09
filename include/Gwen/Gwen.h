@@ -35,7 +35,6 @@
 
 #include "Gwen/Macros.h"
 #include "Gwen/Config.h"
-#include "Gwen/Exports.h"
 #include "Gwen/Structures.h"
 #include "Gwen/Skin.h"
 #include "Gwen/Controls/Base.h"
@@ -60,9 +59,9 @@ namespace Gwen
 
 	namespace Debug 
 	{
-		void GWEN_EXPORT Msg( const wchar_t* str, ... );
-		void GWEN_EXPORT Msg( const char* str, ... );
-		void GWEN_EXPORT AssertCheck( bool b, const char* strMsg );
+		void Msg( const wchar_t* str, ... );
+		void Msg( const char* str, ... );
+		void AssertCheck( bool b, const char* strMsg );
 	}
 
 	namespace Colors
@@ -78,9 +77,9 @@ namespace Gwen
         static const Color GwenPink	( 255, 65, 199, 255 );
     }
 
-	extern GWEN_EXPORT Controls::Base*	HoveredControl;
-	extern GWEN_EXPORT Controls::Base*	KeyboardFocus;
-	extern GWEN_EXPORT Controls::Base*	MouseFocus;
+	extern Controls::Base*	HoveredControl;
+	extern Controls::Base*	KeyboardFocus;
+	extern Controls::Base*	MouseFocus;
 
 	namespace Input
 	{

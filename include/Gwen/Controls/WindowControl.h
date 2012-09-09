@@ -4,7 +4,6 @@
 	See license in Gwen.h
 */
 
-#pragma once
 #ifndef GWEN_CONTROLS_WINDOWCONTROL_H
 #define GWEN_CONTROLS_WINDOWCONTROL_H
 
@@ -26,7 +25,7 @@ namespace Gwen
 	{
 		class CloseButton;
 
-		class GWEN_EXPORT WindowControl : public ResizableControl
+		class  WindowControl : public ResizableControl
 		{
 			public:
 
@@ -35,9 +34,12 @@ namespace Gwen
 				virtual ~WindowControl();
 				virtual void Render( Skin::Base* skin );
 				virtual void RenderUnder( Skin::Base* skin );
-
+#ifndef GWEN_NO_UNICODE
 				virtual void SetTitle( Gwen::UnicodeString title );
 				virtual void SetTitle( Gwen::String title ){ SetTitle( Gwen::Utility::StringToUnicode( title ) ); }
+#else
+				virtual void SetTitle( Gwen::String title );
+#endif
 				virtual void SetClosable(bool closeable);
 
 				virtual void Touch();

@@ -1040,8 +1040,11 @@ void Base::SetMargin( const Margin& margin )
 	Invalidate();
 	InvalidateParent(); 
 }
-
+#ifndef GWEN_NO_UNICODE
 bool Base::HandleAccelerator( Gwen::UnicodeString& accelerator )
+#else
+bool Base::HandleAccelerator( Gwen::String& accelerator )
+#endif
 {
 	if ( Gwen::KeyboardFocus == this || !AccelOnlyFocus() )
 	{

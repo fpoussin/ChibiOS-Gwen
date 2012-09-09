@@ -15,7 +15,7 @@ namespace ToolTip
 {
 	Base* g_ToolTip = NULL;
 
-	GWEN_EXPORT bool TooltipActive()
+	 bool TooltipActive()
 	{
 		return g_ToolTip != NULL;
 	}

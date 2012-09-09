@@ -15,7 +15,7 @@ namespace Gwen
 {
 	namespace Controls
 	{
-		class GWEN_EXPORT FieldLabel : public Controls::Label
+		class  FieldLabel : public Controls::Label
 		{
 			public:
 

@@ -115,7 +115,11 @@ void Button::OnPress()
 
 void Button::SetImage( const TextObject& strName, bool bCenter )
 {
+#ifndef GWEN_NO_UNICODE
 	if ( strName.GetUnicode() == L"" )
+#else
+	if ( strName.Get() == "" )
+#endif
 	{
 		if ( m_Image )
 		{

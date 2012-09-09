@@ -15,7 +15,7 @@ namespace Gwen
 {
 	namespace Controls
 	{
-		class GWEN_EXPORT PageControl : public Base
+		class  PageControl : public Base
 		{
 			static const unsigned int MaxPages = 64;
 

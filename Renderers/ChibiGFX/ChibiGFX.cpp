@@ -107,19 +107,13 @@ namespace Gwen
             SetDrawColor( Gwen::Colors::Red );
             DrawFilledRect( pTargetRect );
         }
-
+#ifndef GWEN_NO_UNICODE
         void ChibiGFX::RenderText( Gwen::Font* pFont, Gwen::Point pos, const Gwen::UnicodeString& text ) const
         {
             float fSize = pFont->size * Scale();
             gdispDrawString(pos.x, pos.y, Gwen::Utility::UnicodeToString(text).c_str(), &fontUI2, RGB2Color(m_color));
         }
 	
-        void ChibiGFX::RenderText( Gwen::Font* pFont, Gwen::Point pos, const Gwen::String& text ) const
-        {
-            float fSize = pFont->size * Scale();
-            gdispDrawString(pos.x, pos.y, text.c_str(), &fontUI2, RGB2Color(m_color));
-        }
-
         Gwen::Point ChibiGFX::MeasureText( Gwen::Font* pFont, const Gwen::UnicodeString& text ) const
         {
             Gwen::Point p;
@@ -127,6 +121,23 @@ namespace Gwen
             //p.y = pFont->size * Scale();
 
             p.x = gdispGetStringWidth(Gwen::Utility::UnicodeToString(text).c_str(), &fontUI2);
+            p.y = gdispGetFontMetric(&fontUI2, fontHeight);
+            return p;
+        }
+#endif
+        void ChibiGFX::RenderText( Gwen::Font* pFont, Gwen::Point pos, const Gwen::String& text ) const
+        {
+            float fSize = pFont->size * Scale();
+            gdispDrawString(pos.x, pos.y, text.c_str(), &fontUI2, RGB2Color(m_color));
+        }
+
+        Gwen::Point ChibiGFX::MeasureText( Gwen::Font* pFont, const Gwen::String& text ) const
+        {
+            Gwen::Point p;
+            //p.x = pFont->size * Scale() * (float)text.length() * 0.4;
+            //p.y = pFont->size * Scale();
+
+            p.x = gdispGetStringWidth(text.c_str(), &fontUI2);
             p.y = gdispGetFontMetric(&fontUI2, fontHeight);
             return p;
         }

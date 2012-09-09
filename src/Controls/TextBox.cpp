@@ -49,14 +49,21 @@ GWEN_CONTROL_CONSTRUCTOR( TextBox )
 
 	SetTabable( true );
 
+#ifndef GWEN_NO_UNICODE
 	AddAccelerator( L"Ctrl + C", &TextBox::OnCopy );
 	AddAccelerator( L"Ctrl + X", &TextBox::OnCut );
 	AddAccelerator( L"Ctrl + V", &TextBox::OnPaste );
 	AddAccelerator( L"Ctrl + A", &TextBox::OnSelectAll );
+#else
+	AddAccelerator( "Ctrl + C", &TextBox::OnCopy );
+	AddAccelerator( "Ctrl + X", &TextBox::OnCut );
+	AddAccelerator( "Ctrl + V", &TextBox::OnPaste );
+	AddAccelerator( "Ctrl + A", &TextBox::OnSelectAll );
+#endif
 
 	Gwen::Anim::Add( this, new ChangeCaretColor() );
 }
-
+#ifndef GWEN_NO_UNICODE
 bool TextBox::OnChar( Gwen::UnicodeChar c )
 {
 	if ( c == '\t' ) return false;
@@ -92,6 +99,43 @@ void TextBox::InsertText( const Gwen::UnicodeString& strInsert )
 
 	RefreshCursorBounds();
 }
+#else
+bool TextBox::OnChar( char c )
+{
+	if ( c == '\t' ) return false;
+
+	Gwen::String str;
+	str += c;
+
+	InsertText( str );	
+	return true;
+}
+
+void TextBox::InsertText( const Gwen::String& strInsert )
+{
+	// TODO: Make sure fits (implement maxlength)
+
+	if ( HasSelection() )
+	{
+		EraseSelection();
+	}
+
+	if ( m_iCursorPos > TextLength() ) m_iCursorPos = TextLength();
+
+	if ( !IsTextAllowed( strInsert, m_iCursorPos )  )
+		return;
+
+	String str = GetText().Get();
+	str.insert( m_iCursorPos, strInsert );
+	SetText( str );
+
+	m_iCursorPos += (int) strInsert.size();
+	m_iCursorEnd = m_iCursorPos;
+	m_iCursorLine = 0;
+
+	RefreshCursorBounds();
+}
+#endif
 
 #ifndef GWEN_NO_ANIMATION
 void TextBox::UpdateCaretColor()
@@ -187,6 +231,7 @@ void TextBox::OnMouseDoubleClickLeft( int /*x*/, int /*y*/ )
 	OnSelectAll( this );
 }
 
+#ifndef GWEN_NO_UNICODE
 UnicodeString TextBox::GetSelection()
 {
 	if ( !HasSelection() ) return L"";
@@ -196,7 +241,19 @@ UnicodeString TextBox::GetSelection()
 
 	const UnicodeString& str = GetText().GetUnicode();
 	return str.substr( iStart, iEnd - iStart );
+}	
+#else
+String TextBox::GetSelection()
+{
+	if ( !HasSelection() ) return "";
+
+	int iStart = Utility::Min( m_iCursorPos, m_iCursorEnd );
+	int iEnd = Utility::Max( m_iCursorPos, m_iCursorEnd );
+
+	const String& str = GetText().Get();
+	return str.substr( iStart, iEnd - iStart );
 }
+#endif
 
 bool TextBox::OnKeyReturn( bool bDown )
 {
@@ -326,10 +383,13 @@ void TextBox::SetCursorEnd( int i )
 	RefreshCursorBounds();
 }
 
-
 void TextBox::DeleteText( int iStartPos, int iLength )
 {
+#ifndef GWEN_NO_UNICODE
 	UnicodeString str = GetText().GetUnicode();
+#else
+	String str = GetText().Get();
+#endif
 	str.erase( iStartPos, iLength );
 	SetText( str );
 
@@ -469,7 +529,11 @@ bool TextBoxMultiline::OnKeyReturn( bool bDown )
 {
 	if ( bDown )
 	{
-		InsertText( L"\n" );
+#ifndef GWEN_NO_UNICODE
+	InsertText( L"\n" );
+#else
+	InsertText( "\n" );
+#endif
 	}
 
 	return true;

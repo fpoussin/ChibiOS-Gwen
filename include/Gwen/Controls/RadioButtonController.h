@@ -18,7 +18,7 @@ namespace Gwen
 	namespace Controls
 	{
 
-		class GWEN_EXPORT RadioButtonController : public Base
+		class  RadioButtonController : public Base
 		{
 			public:
 
@@ -30,7 +30,9 @@ namespace Gwen
 				virtual void OnChange();
 
 				virtual LabeledRadioButton* AddOption( const Gwen::String& strText, const Gwen::String& strOptionName = "" );
-				virtual LabeledRadioButton* AddOption( const Gwen::UnicodeString& strText, const Gwen::String& strOptionName = "" );
+#ifndef GWEN_NO_UNICODE
+				virtual LabeledRadioButton* AddOption( const Gwen::UnicodeString& strText, const Gwen::String& strOptionName = "" );		
+#endif
 
 				virtual LabeledRadioButton*	GetSelected(){ return m_Selected; }
 

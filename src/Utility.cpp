@@ -6,6 +6,7 @@
 
 #include "Gwen/ToolTip.h"
 #include "Gwen/Utility.h"
+#include <stdio.h>
 
 using namespace Gwen;
 
@@ -22,7 +23,7 @@ const T& Gwen::Utility::Min( const T& x, const T& y )
   if ( y > x ) return x;
   return y;
 }
-
+#ifndef GWEN_NO_UNICODE
 String Gwen::Utility::UnicodeToString( const UnicodeString& strIn )
 {
     if ( !strIn.length() ) return "";
@@ -46,7 +47,7 @@ UnicodeString Gwen::Utility::StringToUnicode( const String& strIn )
 //
     return temp;
 }
-
+#endif
 template<typename T> void Gwen::Utility::Replace( T& str, const T& strFind, const T& strReplace )
 {
     size_t pos = 0;
@@ -90,7 +91,7 @@ String Gwen::Utility::ToString( const T& object )
     os << object;
     return os.str();
 }
-
+#ifndef GWEN_NO_UNICODE
 UnicodeString Gwen::Utility::Format( const wchar_t* fmt, ... )
 {
 	wchar_t strOut[ 4096 ];
@@ -103,6 +104,20 @@ UnicodeString Gwen::Utility::Format( const wchar_t* fmt, ... )
 	UnicodeString str = strOut;
 	return str;
 }
+#else
+String Gwen::Utility::Format( const char* fmt, ... )
+{
+	char strOut[ 4096 ];
+
+	va_list s;
+	va_start( s, fmt ); 
+	vsprintf( strOut, fmt, s );
+	va_end(s);
+
+	String str = strOut;
+	return str;
+}
+#endif
 
 void Gwen::Utility::Strings::Split( const Gwen::String& str, const Gwen::String& seperator, Strings::List& outbits, bool bLeave )
 {
@@ -122,7 +137,7 @@ void Gwen::Utility::Strings::Split( const Gwen::String& str, const Gwen::String&
 
 	outbits.push_back( str.substr( iOffset, iLength-iOffset ) );
 }
-
+#ifndef GWEN_NO_UNICODE
 void Gwen::Utility::Strings::Split( const Gwen::UnicodeString& str, const Gwen::UnicodeString& seperator, Strings::UnicodeList& outbits, bool bLeave )
 {
 	int iOffset = 0;
@@ -141,7 +156,7 @@ void Gwen::Utility::Strings::Split( const Gwen::UnicodeString& str, const Gwen::
 
 	outbits.push_back( str.substr( iOffset, iLength-iOffset ) );
 }
-
+#endif
 int Gwen::Utility::Strings::To::Int( const Gwen::String& str )
 {
 	if ( str == "" ) return 0;
@@ -153,12 +168,12 @@ float Gwen::Utility::Strings::To::Float( const Gwen::String& str )
 	if ( str == "" ) return 0.0f;
 	return (float)atof( str.c_str() );
 }
-
+#ifndef GWEN_NO_UNICODE
 float Gwen::Utility::Strings::To::Float( const Gwen::UnicodeString& str )
 {
 	return wcstod( str.c_str(), NULL);
 }
-
+#endif
 bool Gwen::Utility::Strings::To::Bool( const Gwen::String& str )
 {
 	if ( str.size() == 0 ) return false;
@@ -182,7 +197,7 @@ bool Gwen::Utility::Strings::To::Floats( const Gwen::String& str, float* f, size
 	return true;
 }
 
-
+#ifndef GWEN_NO_UNICODE
 bool Gwen::Utility::Strings::Wildcard( const TextObject& strWildcard, const TextObject& strHaystack )
 {
 	const UnicodeString& W = strWildcard.GetUnicode();
@@ -209,8 +224,6 @@ bool Gwen::Utility::Strings::Wildcard( const TextObject& strWildcard, const Text
 	return true;
 }
 
-
-
 void Gwen::Utility::Strings::ToUpper( Gwen::UnicodeString& str )
 {
 	transform( str.begin(), str.end(), str.begin(), towupper );
@@ -229,7 +242,52 @@ void Gwen::Utility::Strings::Strip( Gwen::UnicodeString& str, const Gwen::Unicod
 		str += Source[i];
 	}
 }
+#else
+bool Gwen::Utility::Strings::Wildcard( const TextObject& strWildcard, const TextObject& strHaystack )
+{
+	const String& W = strWildcard.Get();
+	const String& H = strHaystack.Get();
 
+	if ( strWildcard == "*" ) return true;
+
+	int iPos = W.find( "*", 0 );
+	if ( iPos == String::npos ) return strWildcard == strHaystack;
+
+	// First half matches
+	if ( iPos > 0 && W.substr( 0, iPos ) != H.substr( 0, iPos ) )
+		return false;
+
+	// Second half matches
+	if ( iPos != W.length()-1 )
+	{
+		String strEnd = W.substr( iPos+1, W.length() );
+
+		if ( strEnd != H.substr( H.length() - strEnd.length(), H.length() ) )
+			return false;
+	}
+
+	return true;
+}
+
+void Gwen::Utility::Strings::ToUpper( Gwen::String& str )
+{
+	transform( str.begin(), str.end(), str.begin(), toupper );
+}
+
+void Gwen::Utility::Strings::Strip( Gwen::String& str, const Gwen::String& chars )
+{
+	Gwen::String Source = str;
+	str = "";
+
+	for ( int i =0; i<Source.length(); i++ )
+	{
+		if ( chars.find( Source[i] ) != Gwen::String::npos )
+			continue;
+
+		str += Source[i];
+	}
+}
+#endif
 template <typename T>
 T Gwen::Utility::Strings::TrimLeft( const T& str, const T& strChars )
 {

@@ -50,7 +50,7 @@ void RadioButtonController::OnChange()
 {
 	onSelectionChange.Call( this );
 }
-
+#ifndef GWEN_NO_UNICODE
 LabeledRadioButton* RadioButtonController::AddOption( const Gwen::String& strText, const Gwen::String& strOptionName )
 {
 	return AddOption( Gwen::Utility::StringToUnicode( strText ), strOptionName );
@@ -72,4 +72,21 @@ LabeledRadioButton* RadioButtonController::AddOption( const Gwen::UnicodeString&
 
 	return lrb;
 }
+#else
+LabeledRadioButton* RadioButtonController::AddOption( const Gwen::String& strText, const Gwen::String& strOptionName )
+{
+	LabeledRadioButton* lrb = new LabeledRadioButton( this );
 
+	lrb->SetName( strOptionName );
+	lrb->GetLabel()->SetText( strText );
+	lrb->GetRadioButton()->onChecked.Add( this, &RadioButtonController::OnRadioClicked );
+	lrb->Dock( Pos::Top );
+	lrb->SetMargin( Margin( 0, 1, 0, 1 ) );
+	lrb->SetKeyboardInputEnabled( false );
+	lrb->SetTabable( false );
+
+	Invalidate();
+
+	return lrb;
+}
+#endif

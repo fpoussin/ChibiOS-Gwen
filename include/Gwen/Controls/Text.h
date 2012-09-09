@@ -15,7 +15,7 @@ namespace Gwen
 {
 	namespace ControlsInternal
 	{
-		class GWEN_EXPORT Text : public Controls::Base
+		class  Text : public Controls::Base
 		{
 			public:
 
@@ -37,9 +37,11 @@ namespace Gwen
 
 				Gwen::Rect GetCharacterPosition( int iChar );
 				int GetClosestCharacter( Gwen::Point p );
-
+#ifndef GWEN_NO_UNICODE
 				int Length() const { return (int)m_String.GetUnicode().size(); }
-
+#else
+				int Length() const { return (int)m_String.Get().size(); }
+#endif
 				virtual void SetTextColor( const Gwen::Color& col ){ m_Color = col; }
 				virtual void SetTextColorOverride( const Gwen::Color& col ){ m_ColorOverride = col; }
 

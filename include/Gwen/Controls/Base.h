@@ -12,7 +12,7 @@
 #include <map>
 #include <algorithm>
 
-#include "Gwen/Exports.h"
+#include "Gwen/Config.h"
 #include "Gwen/Structures.h"
 #include "Gwen/BaseRender.h"
 #include "Gwen/Events.h"
@@ -52,14 +52,16 @@ namespace Gwen
 	{
 		class Canvas;
 
-		class GWEN_EXPORT Base : public Event::Handler
+		class  Base : public Event::Handler
 		{
 			public:
 
 				typedef std::list<Base*> List;
-
+#ifndef GWEN_NO_UNICODE
 				typedef std::map<Gwen::UnicodeString, Gwen::Event::Caller*> AccelMap;
-
+#else
+				typedef std::map<Gwen::String, Gwen::Event::Caller*> AccelMap;
+#endif			
 				Base( Base* pParent, const Gwen::String& Name = "" );
 				virtual ~Base();
 
@@ -222,9 +224,11 @@ namespace Gwen
 				virtual void SetKeyboardInputEnabled( bool b ){ m_bKeyboardInputEnabled = b; }
 				virtual bool GetKeyboardInputEnabled() const { return m_bKeyboardInputEnabled; }
 				virtual bool NeedsInputChars(){ return false; }
-
+#ifndef GWEN_NO_UNICODE
 				virtual bool OnChar( Gwen::UnicodeChar /*c*/ ){ return false; }
-
+#else
+				virtual bool OnChar( char /*c*/ ){ return false; }
+#endif				
 				virtual bool OnKeyPress( int iKey, bool bPress = true );
 				virtual bool OnKeyRelease( int iKey );
 
@@ -292,8 +296,11 @@ namespace Gwen
 				void DefaultAccel( Gwen::Controls::Base* /*pCtrl*/ ) { AcceleratePressed(); }
 				virtual void AcceleratePressed() {};
 				virtual bool AccelOnlyFocus() { return false; }
+#ifndef GWEN_NO_UNICODE
 				virtual bool HandleAccelerator( Gwen::UnicodeString& accelerator );
-				
+#else
+				virtual bool HandleAccelerator( Gwen::String& accelerator );
+#endif				
 				template <typename T>
 				void AddAccelerator( const TextObject& accelerator, T func, Gwen::Event::Handler* handler = NULL )
 				{
@@ -302,12 +309,15 @@ namespace Gwen
 
 					Gwen::Event::Caller* caller = new Gwen::Event::Caller();
 					caller->Add( handler, func );
-
+#ifndef GWEN_NO_UNICODE
 					Gwen::UnicodeString str = accelerator.GetUnicode();
-
 					Gwen::Utility::Strings::ToUpper( str );
 					Gwen::Utility::Strings::Strip( str, L" " );
-
+#else
+					Gwen::String str = accelerator.Get();
+					Gwen::Utility::Strings::ToUpper( str );
+					Gwen::Utility::Strings::Strip( str, " " );
+#endif
 					m_Accelerators[ str ] = caller;
 				}
 

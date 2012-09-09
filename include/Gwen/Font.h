@@ -23,13 +23,21 @@ namespace Gwen
 		Font()
 		{
 			data = NULL;
+#ifndef GWEN_NO_UNICODE
 			facename = L"Arial";
+#else
+			facename = "Arial";
+#endif
 			size = 10;
 			realsize = 0;
 			bold = false;
 		}
 
+#ifndef GWEN_NO_UNICODE
 		UnicodeString	facename;
+#else
+		String	facename;
+#endif
 		float size;
 		bool  bold;
 

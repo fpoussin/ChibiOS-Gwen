@@ -20,7 +20,7 @@ namespace Gwen
 {
 	namespace Controls
 	{
-		class GWEN_EXPORT ComboBox : public Button
+		class  ComboBox : public Button
 		{
 			public:
 
@@ -39,8 +39,11 @@ namespace Gwen
 				virtual void CloseList();
 
 				virtual void ClearItems();
-
+#ifndef GWEN_NO_UNICODE
 				virtual MenuItem* AddItem( const UnicodeString& strLabel, const String& strName = "" );
+#else
+				virtual MenuItem* AddItem( const String& strLabel, const String& strName = "" );
+#endif
 				virtual bool OnKeyUp( bool bDown );
 				virtual bool OnKeyDown( bool bDown );
 

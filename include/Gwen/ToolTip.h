@@ -18,14 +18,14 @@ using namespace Gwen::Controls;
 
 namespace ToolTip
 {
-	GWEN_EXPORT bool TooltipActive();
+	 bool TooltipActive();
 
-	GWEN_EXPORT void Enable	( Controls::Base* pControl );
-	GWEN_EXPORT void Disable ( Controls::Base* pControl );
+	 void Enable	( Controls::Base* pControl );
+	 void Disable ( Controls::Base* pControl );
 
-	GWEN_EXPORT void ControlDeleted	( Controls::Base* pControl );
+	 void ControlDeleted	( Controls::Base* pControl );
 
-	GWEN_EXPORT void RenderToolTip	( Skin::Base* skin );
+	 void RenderToolTip	( Skin::Base* skin );
 }
 
 #endif

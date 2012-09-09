@@ -17,7 +17,7 @@ namespace Gwen
 {
 	namespace Controls
 	{
-		class GWEN_EXPORT FilePicker : public Controls::Base
+		class  FilePicker : public Controls::Base
 		{
 			public:
 

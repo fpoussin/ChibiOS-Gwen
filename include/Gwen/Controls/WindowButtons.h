@@ -17,7 +17,7 @@ namespace Gwen
 {
 	namespace Controls
 	{
-		class GWEN_EXPORT WindowCloseButton : public Button
+		class  WindowCloseButton : public Button
 		{
 			GWEN_CONTROL_INLINE( WindowCloseButton, Button ) 
 			{ 
@@ -43,7 +43,7 @@ namespace Gwen
 				Controls::Base* m_pWindow;
 		};
 
-		class GWEN_EXPORT WindowMaximizeButton : public WindowCloseButton
+		class  WindowMaximizeButton : public WindowCloseButton
 		{
 			GWEN_CONTROL_INLINE( WindowMaximizeButton, WindowCloseButton ){ m_bMaximized = false; };
 
@@ -63,7 +63,7 @@ namespace Gwen
 				bool m_bMaximized;
 		};
 
-		class GWEN_EXPORT WindowMinimizeButton : public WindowCloseButton
+		class  WindowMinimizeButton : public WindowCloseButton
 		{
 			GWEN_CONTROL_INLINE( WindowMinimizeButton, WindowCloseButton ){};
 

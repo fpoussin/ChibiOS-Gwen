@@ -55,8 +55,11 @@ int Label::GetAlignment()
 
 void Label::SetText( const TextObject& str, bool bDoEvents )
 { 
+#ifndef GWEN_NO_UNICODE
 	if ( m_Text->GetText() == str.GetUnicode() ) return;
-
+#else
+	if ( m_Text->GetText() == str.Get() ) return;
+#endif
 	m_Text->SetString( str );
 	Redraw();
 
@@ -91,7 +94,7 @@ void Label::OnBoundsChanged( Gwen::Rect oldChildBounds )
 		Invalidate();
 	}
 }
-
+#ifndef GWEN_NO_UNICODE
 void Label::SetFont( Gwen::UnicodeString strFacename, int iSize, bool bBold )
 {
 	if ( m_CreatedFont )
@@ -113,4 +116,26 @@ void Label::SetFont( Gwen::UnicodeString strFacename, int iSize, bool bBold )
 
 	m_Text->RefreshSize();
 }
+#else
+void Label::SetFont( Gwen::String strFacename, int iSize, bool bBold )
+{
+	if ( m_CreatedFont )
+	{
+		GetSkin()->ReleaseFont( m_CreatedFont );
+		delete m_CreatedFont;
+		m_CreatedFont = NULL;
+		SetFont( NULL );
+	}
 
+	m_CreatedFont = new Gwen::Font();
+	Debug::AssertCheck( m_CreatedFont != NULL, "Couldn't Create Font!" );
+
+	m_CreatedFont->bold = bBold;
+	m_CreatedFont->facename = strFacename;
+	m_CreatedFont->size = iSize;
+
+	SetFont( m_CreatedFont );
+
+	m_Text->RefreshSize();
+}
+#endif

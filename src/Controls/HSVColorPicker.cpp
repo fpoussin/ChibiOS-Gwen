@@ -45,7 +45,11 @@ GWEN_CONTROL_CONSTRUCTOR( HSVColorPicker )
 
 	{
 		Label* label = new Label( this );
+#ifndef GWEN_NO_UNICODE
 		label->SetText(L"R:");
+#else
+		label->SetText("R:");
+#endif
 		label->SizeToContents();
 		label->SetPos( x, y );
 
@@ -62,7 +66,11 @@ GWEN_CONTROL_CONSTRUCTOR( HSVColorPicker )
 
 	{
 		Label* label = new Label( this );
+#ifndef GWEN_NO_UNICODE
 		label->SetText(L"G:");
+#else
+		label->SetText("G:");
+#endif
 		label->SizeToContents();
 		label->SetPos( x, y );
 
@@ -79,7 +87,11 @@ GWEN_CONTROL_CONSTRUCTOR( HSVColorPicker )
 
 	{
 		Label* label = new Label( this );
+#ifndef GWEN_NO_UNICODE
 		label->SetText(L"B:");
+#else
+		label->SetText("B:");
+#endif
 		label->SizeToContents();
 		label->SetPos( x, y );
 
@@ -97,8 +109,11 @@ void HSVColorPicker::NumericTyped( Gwen::Controls::Base* control )
 {
 	TextBoxNumeric* box = gwen_cast<TextBoxNumeric>(control);
 	if ( !box ) return;
-
+#ifndef GWEN_NO_UNICODE
 	if ( box->GetText() == L"" )	return;
+#else
+	if ( box->GetText() == "" )	return;
+#endif
 
 	int textValue = atoi( box->GetText().c_str()  );
 	if ( textValue < 0 ) textValue = 0;

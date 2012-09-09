@@ -54,9 +54,12 @@ namespace Gwen
                 //You can also ignore these if you don't care about having text on your GUI. That would be silly though
                 virtual void LoadFont( Gwen::Font* pFont );
                 virtual void FreeFont( Gwen::Font* pFont );
+#ifndef GWEN_NO_UNICODE
                 virtual void RenderText( Gwen::Font* pFont, Gwen::Point pos, const Gwen::UnicodeString& text ) const;
+		virtual Gwen::Point MeasureText( Gwen::Font* pFont, const Gwen::UnicodeString& text ) const;
+#endif
 		virtual void RenderText( Gwen::Font* pFont, Gwen::Point pos, const Gwen::String& text ) const;
-                virtual Gwen::Point MeasureText( Gwen::Font* pFont, const Gwen::UnicodeString& text ) const;
+		virtual Gwen::Point MeasureText( Gwen::Font* pFont, const Gwen::String& text ) const;
 
              private:
                 Gwen::Color m_color;

@@ -19,7 +19,7 @@ namespace Gwen
 	namespace Controls
 	{
 
-		class GWEN_EXPORT Rectangle : public Controls::Base
+		class  Rectangle : public Controls::Base
 		{
 			public:
 
