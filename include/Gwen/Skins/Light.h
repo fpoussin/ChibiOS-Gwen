@@ -23,6 +23,7 @@ namespace Gwen
 				Gwen::Color m_colControlOutlineLight;
 				Gwen::Color m_colControlOutlineLighter;
 				Gwen::Color m_colBG; 
+        Gwen::Color m_colBGLight; 
 				Gwen::Color m_colBGDark;
 				Gwen::Color m_colControl;
 				Gwen::Color m_colControlBorderHighlight;
@@ -38,26 +39,6 @@ namespace Gwen
 
 				Light()
 				{
-					m_colBorderColor			= Gwen::Color( 80, 80, 80, 255 );
-					m_colBG						= Gwen::Color( 248, 248, 248, 255 );
-					m_colBGDark					= Gwen::Color( 235, 235, 235, 255 );
-
-					m_colControl				= Gwen::Color( 240, 240, 240, 255 );
-					m_colControlBright			= Gwen::Color( 255, 255, 255, 255 );
-					m_colControlDark			= Gwen::Color( 214, 214, 214, 255 );
-					m_colControlDarker			= Gwen::Color( 180, 180, 180, 255 );
-
-					m_colControlOutlineNormal	= Gwen::Color( 112, 112, 112, 255 );
-					m_colControlOutlineLight	= Gwen::Color( 144, 144, 144, 255 );
-					m_colControlOutlineLighter	= Gwen::Color( 210, 210, 210, 255 );
-
-					m_colHighlightBG			= Gwen::Color( 192, 221, 252, 255 );
-					m_colHighlightBorder		= Gwen::Color(  51, 153, 255, 255 );
-
-					m_colToolTipBackground		= Gwen::Color( 255, 255, 225, 255 );
-					m_colToolTipBorder			= Gwen::Color( 0, 0, 0, 255 );
-
-					m_colModal = Gwen::Color( 25, 25, 25, 150 );
 #ifndef GWEN_NO_UNICODE
 					m_DefaultFont.facename	= L"Microsoft Sans Serif";
 #else
@@ -65,19 +46,51 @@ namespace Gwen
 #endif
 					m_DefaultFont.size		= 11;
           
+          // Controls colors
           Gwen::Color DarkGray = Gwen::Color( 0x33, 0x33, 0x33, 255 );
           Gwen::Color Gray = Gwen::Color( 0x80, 0x80, 0x80, 255 );
           Gwen::Color LightGray = Gwen::Color( 0xBB, 0xBB, 0xBB, 255 );
+          Gwen::Color SuperLightGray = Gwen::Color( 0xEE, 0xEE, 0xEE, 255 );
           
-					Colors.Window.TitleActive	= DarkGray;
-					Colors.Window.TitleInactive	= DarkGray;
+          Gwen::Color LightOrange = Gwen::Color( 0xF8, 0xDC, 0x3E, 255 );
+          Gwen::Color SuperLightBlue = Gwen::Color( 0xC0, 0xDD, 0xFC, 255 );
+          Gwen::Color LightBlue = Gwen::Color( 0x57, 0xAD, 0xFF, 255 );
+          Gwen::Color Blue = Gwen::Color( 0x33, 0x99, 0xFF, 255 );
+          Gwen::Color DarkBlue = Gwen::Color( 0x11, 0x66, 0xB6, 255 );
+          
+					m_colBorderColor			= Gray;
+					m_colBG						= LightGray;
+          m_colBGLight						= SuperLightGray;
+					m_colBGDark					= DarkGray;
+
+					m_colControl				= Gwen::Color( 240, 240, 240, 255 );
+					m_colControlBright			= Gwen::Colors::White;
+					m_colControlDark			= Gwen::Color( 214, 214, 214, 255 );
+					m_colControlDarker			= Gwen::Color( 180, 180, 180, 255 );
+
+					m_colControlOutlineNormal	= Gwen::Color( 112, 112, 112, 255 );
+					m_colControlOutlineLight	= Gwen::Color( 144, 144, 144, 255 );
+					m_colControlOutlineLighter	= Gwen::Color( 210, 210, 210, 255 );
+
+					m_colHighlightBG			= SuperLightBlue;
+					m_colHighlightBorder		= Blue;
+
+					m_colToolTipBackground		= Gwen::Colors::White;
+					m_colToolTipBorder			= Gwen::Colors::Black;
+
+					m_colModal = DarkGray;
+          
+          
+          // text color
+					Colors.Window.TitleActive	= DarkBlue;
+					Colors.Window.TitleInactive	= LightBlue;
 					Colors.Button.Normal		= DarkGray;
 					Colors.Button.Hover			= DarkGray;
-					Colors.Button.Down			= DarkGray;
+					Colors.Button.Down			= Gwen::Colors::Black;
 					Colors.Button.Disabled		= DarkGray;
-					Colors.Tab.Active.Normal		= DarkGray;
-					Colors.Tab.Active.Hover			= DarkGray;
-					Colors.Tab.Active.Down			= DarkGray;
+					Colors.Tab.Active.Normal		= DarkBlue;
+					Colors.Tab.Active.Hover			= DarkBlue;
+					Colors.Tab.Active.Down			= DarkBlue;
 					Colors.Tab.Active.Disabled		= DarkGray;
 					Colors.Tab.Inactive.Normal		= DarkGray;
 					Colors.Tab.Inactive.Hover		= DarkGray;
@@ -88,10 +101,10 @@ namespace Gwen
 					Colors.Label.Dark				= DarkGray;
 					Colors.Label.Highlight			= DarkGray;
 		
-					Colors.Tree.Lines				= DarkGray;
+					Colors.Tree.Lines				= LightGray;
 					Colors.Tree.Normal				= DarkGray;
-					Colors.Tree.Hover				= DarkGray;
-					Colors.Tree.Selected			= DarkGray;
+					Colors.Tree.Hover				= DarkBlue;
+					Colors.Tree.Selected			= Gwen::Colors::Black;
 
 					Colors.Properties.Line_Normal		= DarkGray;
 					Colors.Properties.Line_Selected		= DarkGray;
@@ -108,7 +121,7 @@ namespace Gwen
 					Colors.Properties.Label_Hover		= DarkGray;
 
 					Colors.ModalBackground				= LightGray;
-					Colors.TooltipText					= LightGray;
+					Colors.TooltipText					= DarkGray;
 					Colors.Category.Header				= DarkGray;
 					Colors.Category.Header_Closed		= DarkGray;
 
@@ -116,17 +129,17 @@ namespace Gwen
 					Colors.Category.Line.Text_Hover		= DarkGray;
 					Colors.Category.Line.Text_Selected	= DarkGray;
           
-					Colors.Category.Line.Button			= LightGray;
-					Colors.Category.Line.Button_Hover	= Gray;
-					Colors.Category.Line.Button_Selected = Gray;
+					Colors.Category.Line.Button			= Gwen::Colors::White;
+					Colors.Category.Line.Button_Hover	= LightOrange;
+					Colors.Category.Line.Button_Selected = LightOrange;
           
 					Colors.Category.LineAlt.Text			= DarkGray;
 					Colors.Category.LineAlt.Text_Hover	= DarkGray;
 					Colors.Category.LineAlt.Text_Selected	= DarkGray;
           
-					Colors.Category.LineAlt.Button			= LightGray;
-					Colors.Category.LineAlt.Button_Hover	= Gray;
-					Colors.Category.LineAlt.Button_Selected	= Gray;
+					Colors.Category.LineAlt.Button			= Gwen::Colors::White;
+					Colors.Category.LineAlt.Button_Hover	= LightOrange;
+					Colors.Category.LineAlt.Button_Selected	= LightOrange;
           
 				}
 
@@ -738,7 +751,11 @@ namespace Gwen
 
 				virtual void DrawStatusBar( Controls::Base* control )
 				{
-					// TODO.
+          Gwen::Rect rect = control->GetRenderBounds();
+					GetRender()->SetDrawColor( m_colBGLight );
+					GetRender()->DrawFilledRect( rect );
+          GetRender()->SetDrawColor( m_colBorderColor);
+          GetRender()->DrawLinedRect( rect );
 				}
 
 				void DrawColorDisplay( Controls::Base* control, Gwen::Color color )
@@ -792,8 +809,12 @@ namespace Gwen
 					DrawButton( control, bDepressed, control->IsHovered(), control->IsDisabled() );
 				}
 
-				virtual void DrawCategoryHolder( Controls::Base* ctrl ){}
-				virtual void DrawCategoryInner( Controls::Base* ctrl, bool bCollapsed ){}
+				virtual void DrawCategoryHolder( Controls::Base* ctrl ){ }
+				virtual void DrawCategoryInner( Controls::Base* ctrl, bool bCollapsed ){
+          Gwen::Rect rect = ctrl->GetRenderBounds();
+          GetRender()->SetDrawColor( m_colBorderColor);
+          GetRender()->DrawLinedRect( rect );
+          }
 		}; 
 	}
 }
