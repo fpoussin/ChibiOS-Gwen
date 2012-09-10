@@ -64,6 +64,70 @@ namespace Gwen
 					m_DefaultFont.facename	= "Microsoft Sans Serif";
 #endif
 					m_DefaultFont.size		= 11;
+          
+          Gwen::Color DarkGray = Gwen::Color( 0x33, 0x33, 0x33, 255 );
+          Gwen::Color Gray = Gwen::Color( 0x80, 0x80, 0x80, 255 );
+          Gwen::Color LightGray = Gwen::Color( 0xBB, 0xBB, 0xBB, 255 );
+          
+					Colors.Window.TitleActive	= DarkGray;
+					Colors.Window.TitleInactive	= DarkGray;
+					Colors.Button.Normal		= DarkGray;
+					Colors.Button.Hover			= DarkGray;
+					Colors.Button.Down			= DarkGray;
+					Colors.Button.Disabled		= DarkGray;
+					Colors.Tab.Active.Normal		= DarkGray;
+					Colors.Tab.Active.Hover			= DarkGray;
+					Colors.Tab.Active.Down			= DarkGray;
+					Colors.Tab.Active.Disabled		= DarkGray;
+					Colors.Tab.Inactive.Normal		= DarkGray;
+					Colors.Tab.Inactive.Hover		= DarkGray;
+					Colors.Tab.Inactive.Down		= DarkGray;
+					Colors.Tab.Inactive.Disabled	= DarkGray;
+					Colors.Label.Default			= DarkGray;
+					Colors.Label.Bright				= DarkGray;
+					Colors.Label.Dark				= DarkGray;
+					Colors.Label.Highlight			= DarkGray;
+		
+					Colors.Tree.Lines				= DarkGray;
+					Colors.Tree.Normal				= DarkGray;
+					Colors.Tree.Hover				= DarkGray;
+					Colors.Tree.Selected			= DarkGray;
+
+					Colors.Properties.Line_Normal		= DarkGray;
+					Colors.Properties.Line_Selected		= DarkGray;
+					Colors.Properties.Line_Hover		= DarkGray;
+					Colors.Properties.Title				= DarkGray;
+
+					Colors.Properties.Column_Normal		= DarkGray;
+					Colors.Properties.Column_Selected	= DarkGray;
+					Colors.Properties.Column_Hover		= DarkGray;
+					Colors.Properties.Border			= DarkGray;
+
+					Colors.Properties.Label_Normal		= DarkGray;
+					Colors.Properties.Label_Selected	= DarkGray;
+					Colors.Properties.Label_Hover		= DarkGray;
+
+					Colors.ModalBackground				= LightGray;
+					Colors.TooltipText					= LightGray;
+					Colors.Category.Header				= DarkGray;
+					Colors.Category.Header_Closed		= DarkGray;
+
+					Colors.Category.Line.Text			= DarkGray;
+					Colors.Category.Line.Text_Hover		= DarkGray;
+					Colors.Category.Line.Text_Selected	= DarkGray;
+          
+					Colors.Category.Line.Button			= LightGray;
+					Colors.Category.Line.Button_Hover	= Gray;
+					Colors.Category.Line.Button_Selected = Gray;
+          
+					Colors.Category.LineAlt.Text			= DarkGray;
+					Colors.Category.LineAlt.Text_Hover	= DarkGray;
+					Colors.Category.LineAlt.Text_Selected	= DarkGray;
+          
+					Colors.Category.LineAlt.Button			= LightGray;
+					Colors.Category.LineAlt.Button_Hover	= Gray;
+					Colors.Category.LineAlt.Button_Selected	= Gray;
+          
 				}
 
 				virtual void DrawGenericPanel( Controls::Base* control )
@@ -186,17 +250,17 @@ namespace Gwen
 					if ( !bDepressed )
 					{
 						m_Render->SetDrawColor( m_colControlBright );
-						//m_Render->DrawShavedCornerRect( Gwen::Rect( 1, 1, w-2, h-2 ), bSquared );
+            m_Render->DrawLinedRect( Gwen::Rect( 1, 1, w-2, h-2 ) );	
 					}
 					else
 					{
 						m_Render->SetDrawColor( m_colControlDarker );
-						//m_Render->DrawShavedCornerRect( Gwen::Rect( 1, 1, w-2, h-2 ), bSquared );
+            m_Render->DrawLinedRect( Gwen::Rect( 1, 1, w-2, h-2 ) );	
 					}
 
 					// Border
 					m_Render->SetDrawColor( m_colControlOutlineNormal );
-					//m_Render->DrawShavedCornerRect( Gwen::Rect( 0, 0, w, h ), bSquared );
+          m_Render->DrawLinedRect( Gwen::Rect( 0, 0, w, h ) );	
 				}
 
 				virtual void DrawRadioButton( Gwen::Controls::Base* control, bool bSelected, bool bDepressed)
@@ -212,8 +276,8 @@ namespace Gwen
 					// Border
 					if ( control->IsHovered() )	m_Render->SetDrawColor( Gwen::Color( 85, 130, 164, 255 ) );
 					else m_Render->SetDrawColor( m_colControlOutlineLight );
-
-					//m_Render->DrawShavedCornerRect( rect );
+          
+          m_Render->DrawLinedRect( rect );	
 
 					m_Render->SetDrawColor( Gwen::Color(   0,  50,  60, 15 ) );
 					m_Render->DrawFilledRect( Gwen::Rect( rect.x+2, rect.y+2, rect.w-4, rect.h-4 ) );
@@ -347,11 +411,11 @@ namespace Gwen
 					m_Render->DrawFilledRect( Gwen::Rect( 1, rect.h*0.5, rect.w-2, rect.h*0.5-1 ) );
 
 					m_Render->SetDrawColor( m_colControlBright );
-					//m_Render->DrawShavedCornerRect( Gwen::Rect( 1, 1, rect.w-2, rect.h ) );
+          m_Render->DrawLinedRect( Gwen::Rect( 1, 1, rect.w-2, rect.h ) );	
 
 					m_Render->SetDrawColor( m_colBorderColor );
 
-					//m_Render->DrawShavedCornerRect( Gwen::Rect( 0, 0, rect.w, rect.h ) );
+          m_Render->DrawLinedRect( Gwen::Rect( 0, 0, rect.w, rect.h ) );	
 				}
 
 				virtual void DrawTabControl( Gwen::Controls::Base* control )
@@ -364,7 +428,7 @@ namespace Gwen
 					m_Render->SetDrawColor( m_colBorderColor );
 					m_Render->DrawLinedRect( rect );
 
-					//m_Render->SetDrawColor( m_colControl );
+					m_Render->SetDrawColor( m_colControl );
 					//m_Render->DrawFilledRect( CurrentButtonRect );
 				}
 
@@ -390,7 +454,7 @@ namespace Gwen
 
 					// Light inner border
 					m_Render->SetDrawColor( Gwen::Color( 255, 255, 255, 100 ) );
-					//m_Render->DrawShavedCornerRect( Gwen::Rect( rect.x+1, rect.y+1, rect.w-2, rect.h-2 ) );		
+          m_Render->DrawLinedRect( Gwen::Rect( rect.x+1, rect.y+1, rect.w-2, rect.h-2 ) );	
 
 					// Dark line between titlebar and main
 					m_Render->SetDrawColor( m_colBorderColor );
@@ -401,7 +465,7 @@ namespace Gwen
 
 					// Dark outer border
 					m_Render->SetDrawColor( m_colBorderColor );
-					//m_Render->DrawShavedCornerRect( Gwen::Rect( rect.x, rect.y, rect.w, rect.h ) );		
+          m_Render->DrawLinedRect( Gwen::Rect( rect.x, rect.y, rect.w, rect.h ) );	
 				}
 
 				virtual void DrawHighlight( Gwen::Controls::Base* control )
@@ -472,13 +536,13 @@ namespace Gwen
 					}
 
 					m_Render->SetDrawColor( Gwen::Color( 255, 255, 255, 150 ) );
-					//m_Render->DrawShavedCornerRect( Gwen::Rect( 1, 1, rect.w-2, rect.h-2 ) );
+          m_Render->DrawLinedRect( Gwen::Rect( 1, 1, rect.w-2, rect.h-2 ) );
 
 					m_Render->SetDrawColor( Gwen::Color( 255, 255, 255, 70 ) );
-					//m_Render->DrawShavedCornerRect( Gwen::Rect( 2, 2, rect.w-4, rect.h-4 ) );
+          m_Render->DrawLinedRect( Gwen::Rect( 2, 2, rect.w-4, rect.h-4 ) );
 
 					m_Render->SetDrawColor( m_colBorderColor );
-					//m_Render->DrawShavedCornerRect( rect );	
+          m_Render->DrawLinedRect( rect );
 				}
 		 
 				virtual void DrawListBox( Gwen::Controls::Base* control )

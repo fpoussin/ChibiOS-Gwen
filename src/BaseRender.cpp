@@ -52,7 +52,7 @@ namespace Gwen
 			DrawFilledRect( Gwen::Rect( rect.x + rect.w-1, rect.y, 1, rect.h ) );
 		};
 
-        void Base::DrawPixel( int const& x, int const& y ) const
+        void Base::DrawPixel( int x, int y) const
 		{
 			DrawFilledRect( Gwen::Rect( x, y, 1, 1 ) );
 		}
@@ -103,7 +103,7 @@ namespace Gwen
 			rect.h = ceil(((float) rect.h ) * m_fScale);
 		}
 
-		void Gwen::Renderer::Base::SetClipRegion( Gwen::Rect rect )
+		void Gwen::Renderer::Base::SetClipRegion( Gwen::Rect const& rect )
 		{ 
 			m_rectClipRegion = rect; 
 		}

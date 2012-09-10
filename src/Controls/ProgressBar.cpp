@@ -13,6 +13,7 @@
 using namespace Gwen;
 using namespace Gwen::Controls;
 
+#ifndef GWEN_NO_ANIMATION
 class ProgressBarThink : public Gwen::Anim::Animation
 {
 	public:
@@ -34,7 +35,7 @@ class ProgressBarThink : public Gwen::Anim::Animation
 
 		float	m_fLastFrame;
 };
-
+#endif
 
 GWEN_CONTROL_CONSTRUCTOR( ProgressBar )
 {
@@ -48,8 +49,9 @@ GWEN_CONTROL_CONSTRUCTOR( ProgressBar )
 	m_fProgress = 0.0f;
 	m_bAutoLabel = true;
 	m_fCycleSpeed = 0.0f;
-
+#ifndef GWEN_NO_ANIMATION
 	Gwen::Anim::Add( this, new ProgressBarThink() );
+#endif
 }
 
 void ProgressBar::SetValue(float val)

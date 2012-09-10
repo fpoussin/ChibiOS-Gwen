@@ -26,7 +26,7 @@ Color HSVToColor( float h, float s, float v )
 	{
 		r = g = b = v;
 	}
-	double min,max,delta,hue;
+	float min,max,delta,hue;
 
 	max = v;
 	delta = (max * s)/255.0;
@@ -87,7 +87,7 @@ Color HSVToColor( float h, float s, float v )
 
 HSV RGBtoHSV( int r, int g, int b )
 {
-	double min,max,delta,temp;
+	float min,max,delta,temp;
 	min = GwenUtil_Min(r,GwenUtil_Min(g,b));
 	max = GwenUtil_Max(r,GwenUtil_Max(g,b));
 	delta = max - min;
@@ -105,16 +105,16 @@ HSV RGBtoHSV( int r, int g, int b )
 
 		if (r == (int)max)
 		{
-			temp = (double)(g-b)/delta;
+			temp = (float)(g-b)/delta;
 		}
 		else
 			if (g == (int)max)
 			{
-				temp = 2.0 + ((double)(b-r)/delta);
+				temp = 2.0 + ((float)(b-r)/delta);
 			}
 			else
 			{
-				temp = 4.0 + ((double)(r-g)/delta);
+				temp = 4.0 + ((float)(r-g)/delta);
 			}
 			temp *= 60;
 			if (temp < 0)

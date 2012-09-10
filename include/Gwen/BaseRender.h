@@ -48,9 +48,9 @@ namespace Gwen
 				virtual void Begin(){};
 				virtual void End(){};
 
-                virtual void SetDrawColor( Color const& color ){};
+         virtual void SetDrawColor( Color const& color ){};
 
-                virtual void DrawFilledRect( Gwen::Rect const& rect ) const{};
+        virtual void DrawFilledRect( Gwen::Rect const& rect ) const{};
 
 				virtual void StartClip(){};
 				virtual void EndClip(){};
@@ -73,9 +73,9 @@ namespace Gwen
 				// No need to implement these functions in your derived class, but if 
 				// you can do them faster than the default implementation it's a good idea to.
 				//
-                virtual void DrawLinedRect( Gwen::Rect const& rect ) const;
-                virtual void DrawPixel( int const& x, int const& y ) const;
-                virtual void DrawShavedCornerRect( Gwen::Rect rect, bool bSlight = false ) const;
+        virtual void DrawLinedRect( Gwen::Rect const& rect ) const;
+        virtual void DrawPixel( int x, int y) const;
+        virtual void DrawShavedCornerRect( Gwen::Rect rect, bool bSlight = false ) const;
 				virtual Gwen::Point MeasureText( Gwen::Font* pFont, const Gwen::String& text ) const;
 				virtual void RenderText( Gwen::Font* pFont, Gwen::Point pos, const Gwen::String& text ) const;
 
@@ -102,7 +102,7 @@ namespace Gwen
 
 			public:
 
-				void SetClipRegion( Gwen::Rect rect );
+				void SetClipRegion( Gwen::Rect const& rect );
 				void AddClipRegion( Gwen::Rect rect );
 				bool ClipRegionVisible();
 				const Gwen::Rect& ClipRegion() const;
@@ -114,7 +114,7 @@ namespace Gwen
 
 			public:
 				
-                void SetScale( float const&  fScale ){ m_fScale = fScale; }
+        void SetScale( float const&  fScale ){ m_fScale = fScale; }
 				float Scale() const { return m_fScale; }
 
 				float m_fScale;

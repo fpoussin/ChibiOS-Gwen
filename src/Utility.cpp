@@ -48,6 +48,7 @@ UnicodeString Gwen::Utility::StringToUnicode( const String& strIn )
     return temp;
 }
 #endif
+
 template<typename T> void Gwen::Utility::Replace( T& str, const T& strFind, const T& strReplace )
 {
     size_t pos = 0;
@@ -84,13 +85,27 @@ Gwen::Rect Gwen::Utility::ClampRectToRect( Gwen::Rect inside, Gwen::Rect outside
     return inside;
 }
 
-template <class T>
-String Gwen::Utility::ToString( const T& object )
+String Gwen::Utility::ToString( int num )
 {
-    std::ostringstream os;
-    os << object;
-    return os.str();
+  char buf[11];
+  snprintf(buf, sizeof(buf), "%d", num);
+  return String(buf);
 }
+
+String Gwen::Utility::ToString( unsigned int num )
+{
+  char buf[11];
+  snprintf(buf, sizeof(buf), "%u", num);
+  return String(buf);
+}
+
+String Gwen::Utility::ToString( float num )
+{
+  char buf[13];
+  snprintf(buf, sizeof(buf), "%10.2f", num);
+  return String(buf);
+}
+
 #ifndef GWEN_NO_UNICODE
 UnicodeString Gwen::Utility::Format( const wchar_t* fmt, ... )
 {
@@ -205,7 +220,7 @@ bool Gwen::Utility::Strings::Wildcard( const TextObject& strWildcard, const Text
 
 	if ( strWildcard == "*" ) return true;
 
-	int iPos = W.find( L"*", 0 );
+	unsigned int iPos = W.find( L"*", 0 );
 	if ( iPos == UnicodeString::npos ) return strWildcard == strHaystack;
 
 	// First half matches
@@ -234,7 +249,7 @@ void Gwen::Utility::Strings::Strip( Gwen::UnicodeString& str, const Gwen::Unicod
 	Gwen::UnicodeString Source = str;
 	str = L"";
 
-	for ( int i =0; i<Source.length(); i++ )
+	for ( unsigned int i =0; i<Source.length(); i++ )
 	{
 		if ( chars.find( Source[i] ) != Gwen::UnicodeString::npos )
 			continue;
@@ -250,7 +265,7 @@ bool Gwen::Utility::Strings::Wildcard( const TextObject& strWildcard, const Text
 
 	if ( strWildcard == "*" ) return true;
 
-	int iPos = W.find( "*", 0 );
+	unsigned int iPos = W.find( "*", 0 );
 	if ( iPos == String::npos ) return strWildcard == strHaystack;
 
 	// First half matches
@@ -279,7 +294,7 @@ void Gwen::Utility::Strings::Strip( Gwen::String& str, const Gwen::String& chars
 	Gwen::String Source = str;
 	str = "";
 
-	for ( int i =0; i<Source.length(); i++ )
+	for ( unsigned int i =0; i<Source.length(); i++ )
 	{
 		if ( chars.find( Source[i] ) != Gwen::String::npos )
 			continue;

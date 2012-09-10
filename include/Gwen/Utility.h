@@ -9,7 +9,6 @@
 
 #include <sstream>
 #include <string>
-#include "hacks.h"
 #include <vector>
 #include "Gwen/Structures.h"
 
@@ -28,8 +27,12 @@ namespace Gwen
         String UnicodeToString( const UnicodeString& strIn );
         UnicodeString StringToUnicode( const String& strIn );
 #endif
-        template<typename T> void Replace( T& str, const T& strFind, const T& strReplace );
-        template <class T> String ToString( const T& object );
+        template<typename T> 
+        void Replace( T& str, const T& strFind, const T& strReplace );
+    
+        String ToString( int num );
+        String ToString( unsigned int num );
+        String ToString( float num );
 
         Gwen::Rect ClampRectToRect( Gwen::Rect inside, Gwen::Rect outside, bool clampSize = false );
 #ifndef GWEN_NO_UNICODE	

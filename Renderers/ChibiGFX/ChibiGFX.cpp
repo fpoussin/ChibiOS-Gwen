@@ -25,10 +25,7 @@ namespace Gwen
         
         void ChibiGFX::SetDrawColor( Gwen::Color const& color )
         {
-          m_color.r = color.r;
-          m_color.g = color.g;
-          m_color.b = color.b;
-          m_color.a = color.a;
+          m_color = color;
         }
 
         inline Gwen::Color ChibiGFX::BlendColor(Gwen::Color const& c1, Gwen::Color const& c2) const
@@ -54,23 +51,23 @@ namespace Gwen
           gdispFillArea(rect.x, rect.y, rect.w, rect.h, RGB2Color(this->m_color));
         }
 
-        void ChibiGFX::DrawLine( int const& x, int const& y, int const& a, int const& b ) const
+        void ChibiGFX::DrawLine( int x, int y, int a, int b ) const
         {
           gdispDrawLine(x, y, a, b, RGB2Color(this->m_color));
         }
 
         void ChibiGFX::DrawLinedRect( Gwen::Rect const& rect ) const
         {
-            DrawFilledRect( Gwen::Rect( rect.x, rect.y, rect.w, 1 ) );
-            DrawFilledRect( Gwen::Rect( rect.x, rect.y + rect.h-1, rect.w, 1 ) );
-
-            DrawFilledRect( Gwen::Rect( rect.x, rect.y, 1, rect.h ) );
-            DrawFilledRect( Gwen::Rect( rect.x + rect.w-1, rect.y, 1, rect.h ) );
+            gdispFillArea(rect.x, rect.y, rect.w, 1, RGB2Color(this->m_color));
+            gdispFillArea(rect.x, rect.y + rect.h-1, rect.w, 1, RGB2Color(this->m_color));
+          
+            gdispFillArea(rect.x, rect.y, 1, rect.h, RGB2Color(this->m_color));
+            gdispFillArea(rect.x + rect.w-1, rect.y, 1, rect.h, RGB2Color(this->m_color));
         }
 
-        void ChibiGFX::DrawPixel( int const& x, int const& y ) const
+        void ChibiGFX::DrawPixel( int x, int y) const
         {
-            DrawFilledRect( Gwen::Rect( x, y, 1, 1 ) );
+            gdispFillArea(x, y, 1, 1, RGB2Color(this->m_color));
         }
 
         void ChibiGFX::DrawShavedCornerRect( Gwen::Rect rect, bool bSlight ) const
@@ -108,7 +105,7 @@ namespace Gwen
             DrawFilledRect( pTargetRect );
         }
 #ifndef GWEN_NO_UNICODE
-        void ChibiGFX::RenderText( Gwen::Font* pFont, Gwen::Point pos, const Gwen::UnicodeString& text ) const
+        void ChibiGFX::RenderText( Gwen::Font* pFont, Gwen::Point const&  pos, const Gwen::UnicodeString& text ) const
         {
             float fSize = pFont->size * Scale();
             gdispDrawString(pos.x, pos.y, Gwen::Utility::UnicodeToString(text).c_str(), &fontUI2, RGB2Color(m_color));
@@ -125,7 +122,7 @@ namespace Gwen
             return p;
         }
 #endif
-        void ChibiGFX::RenderText( Gwen::Font* pFont, Gwen::Point pos, const Gwen::String& text ) const
+        void ChibiGFX::RenderText( Gwen::Font* pFont, Gwen::Point const&  pos, const Gwen::String& text ) const
         {
             float fSize = pFont->size * Scale();
             gdispDrawString(pos.x, pos.y, text.c_str(), &fontUI2, RGB2Color(m_color));

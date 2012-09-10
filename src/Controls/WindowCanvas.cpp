@@ -14,6 +14,8 @@
 
 #ifndef GWEN_NO_ANIMATION
 #include "Gwen/Anim.h"
+#else
+#include "Gwen/Platform.h"
 #endif
 
 using namespace Gwen;

@@ -29,7 +29,6 @@ class ChangeCaretColor : public Gwen::Anim::Animation
 };
 #endif
 
-
 GWEN_CONTROL_CONSTRUCTOR( TextBox )
 {
 	SetSize( 200, 20 );
@@ -60,8 +59,9 @@ GWEN_CONTROL_CONSTRUCTOR( TextBox )
 	AddAccelerator( "Ctrl + V", &TextBox::OnPaste );
 	AddAccelerator( "Ctrl + A", &TextBox::OnSelectAll );
 #endif
-
+#ifndef GWEN_NO_ANIMATION
 	Gwen::Anim::Add( this, new ChangeCaretColor() );
+#endif
 }
 #ifndef GWEN_NO_UNICODE
 bool TextBox::OnChar( Gwen::UnicodeChar c )
