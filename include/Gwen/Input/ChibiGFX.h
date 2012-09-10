@@ -4,7 +4,7 @@
 #include "Gwen/InputHandler.h"
 #include "Gwen/Gwen.h"
 #include "Gwen/Controls/Canvas.h"
-#include <vector>
+#include <list>
 
 extern "C" {
     #include "ch.h"
@@ -83,19 +83,19 @@ namespace Gwen
 			return Gwen::Key::Invalid;
                 }
 		
-		void AddKey(int Port, int Pad, int Key) {
+		void AddKey(GPIO_TypeDef* Port, unsigned char Pad, int Key) {
 			m_KeyList.push_back({Port, Pad, Key});
 		}
                 
                 void ProcessKeys() {
-			for(std::vector<InputPad>::iterator iter = m_KeyList.begin(); iter != m_KeyList.end(); iter++)
-			{/* TODO
-				if (palReadPad(&iter->Port, &iter->Pad)) {
-					int trkey = TranslateKeyCode(&iter->Key);
+			for(std::list<InputPad>::iterator iter = m_KeyList.begin(); iter != m_KeyList.end(); iter++)
+			{
+				if (palReadPad(iter->Port, iter->Pad)) {
+					int trkey = TranslateKeyCode(iter->Key);
 					// We bounce the key
 					m_Canvas->InputKey( trkey, true );
 					m_Canvas->InputKey( trkey, false );
-				} */
+				}
 			}
                 }
 
@@ -103,10 +103,10 @@ namespace Gwen
 			Gwen::Controls::Canvas*	m_Canvas;
 			int m_MouseX;
 			int m_MouseY;
-			const TOUCHPADDriver m_Touchpad;
 			const SPIConfig m_Spicfg;
-			struct InputPad {int Port; int Pad;	int Key; };
-			std::vector<InputPad> m_KeyList;
+			const TOUCHPADDriver m_Touchpad;
+			typedef struct InputPad {GPIO_TypeDef* Port; unsigned char Pad;	int Key; };
+			std::list<InputPad> m_KeyList;
         };
     }
 }
