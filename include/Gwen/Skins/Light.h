@@ -106,15 +106,15 @@ namespace Gwen
 					Colors.Tree.Hover				= DarkBlue;
 					Colors.Tree.Selected			= Gwen::Colors::Black;
 
-					Colors.Properties.Line_Normal		= DarkGray;
-					Colors.Properties.Line_Selected		= DarkGray;
-					Colors.Properties.Line_Hover		= DarkGray;
+					Colors.Properties.Line_Normal		= SuperLightGray;
+					Colors.Properties.Line_Selected		= SuperLightGray;
+					Colors.Properties.Line_Hover		= SuperLightGray;
 					Colors.Properties.Title				= DarkGray;
 
-					Colors.Properties.Column_Normal		= DarkGray;
-					Colors.Properties.Column_Selected	= DarkGray;
-					Colors.Properties.Column_Hover		= DarkGray;
-					Colors.Properties.Border			= DarkGray;
+					Colors.Properties.Column_Normal		= SuperLightGray;
+					Colors.Properties.Column_Selected	= SuperLightGray;
+					Colors.Properties.Column_Hover		= SuperLightGray;
+					Colors.Properties.Border			= SuperLightGray;
 
 					Colors.Properties.Label_Normal		= DarkGray;
 					Colors.Properties.Label_Selected	= DarkGray;
@@ -809,7 +809,10 @@ namespace Gwen
 					DrawButton( control, bDepressed, control->IsHovered(), control->IsDisabled() );
 				}
 
-				virtual void DrawCategoryHolder( Controls::Base* ctrl ){ }
+				virtual void DrawCategoryHolder( Controls::Base* ctrl ){ 
+
+          }
+          
 				virtual void DrawCategoryInner( Controls::Base* ctrl, bool bCollapsed ){
           Gwen::Rect rect = ctrl->GetRenderBounds();
           GetRender()->SetDrawColor( m_colBorderColor);
