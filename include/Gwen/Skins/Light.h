@@ -51,6 +51,7 @@ namespace Gwen
           Gwen::Color Gray = Gwen::Color( 0x80, 0x80, 0x80, 255 );
           Gwen::Color LightGray = Gwen::Color( 0xBB, 0xBB, 0xBB, 255 );
           Gwen::Color SuperLightGray = Gwen::Color( 0xEE, 0xEE, 0xEE, 255 );
+          Gwen::Color AlmostWhite = Gwen::Color( 0xF8, 0xF8, 0xF8, 255 );
           
           Gwen::Color LightOrange = Gwen::Color( 0xF8, 0xDC, 0x3E, 255 );
           Gwen::Color SuperLightBlue = Gwen::Color( 0xC0, 0xDD, 0xFC, 255 );
@@ -129,7 +130,7 @@ namespace Gwen
 					Colors.Category.Line.Text_Hover		= DarkGray;
 					Colors.Category.Line.Text_Selected	= DarkGray;
           
-					Colors.Category.Line.Button			= Gwen::Colors::White;
+					Colors.Category.Line.Button			= AlmostWhite;
 					Colors.Category.Line.Button_Hover	= LightOrange;
 					Colors.Category.Line.Button_Selected = LightOrange;
           
