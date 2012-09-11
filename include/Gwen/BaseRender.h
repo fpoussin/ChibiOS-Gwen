@@ -66,7 +66,7 @@ namespace Gwen
 				virtual void LoadFont( Gwen::Font* pFont ){ (void*) pFont; };
 				virtual void FreeFont( Gwen::Font* pFont ){ (void*) pFont; };
 #ifndef GWEN_NO_UNICODE
-				virtual void RenderText( Gwen::Font* pFont, Gwen::Point pos, const Gwen::UnicodeString& text ) const;
+				virtual void RenderText( Gwen::Font* pFont, Gwen::Point const& pos, const Gwen::UnicodeString& text ) const;
 				virtual Gwen::Point MeasureText( Gwen::Font* pFont, const Gwen::UnicodeString& text ) const;
 #endif
 				//
@@ -77,7 +77,7 @@ namespace Gwen
         virtual void DrawPixel( int x, int y) const;
         virtual void DrawShavedCornerRect( Gwen::Rect rect, bool bSlight = false ) const;
 				virtual Gwen::Point MeasureText( Gwen::Font* pFont, const Gwen::String& text ) const;
-				virtual void RenderText( Gwen::Font* pFont, Gwen::Point pos, const Gwen::String& text ) const;
+				virtual void RenderText( Gwen::Font* pFont, Gwen::Point const& pos, const Gwen::String& text ) const;
 
 			public:
 

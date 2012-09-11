@@ -62,7 +62,7 @@ namespace Gwen
                 virtual Gwen::Point MeasureText( Gwen::Font* pFont, const Gwen::String& text ) const;
 
             private:
-                Gwen::Color m_color;
+                color_t m_color;
                 float m_fScale;
 
 		};

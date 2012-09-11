@@ -6,6 +6,17 @@
 
 #include <math.h>
 
+//#define DEBUG_RENDERER
+
+#ifdef DEBUG_RENDERER
+extern "C" {
+	#include "ch.h"
+	#include "hal.h"
+	#include "chprintf.h"
+	#include <string>
+}
+#endif
+
 namespace Gwen
 {
     namespace Renderer
@@ -14,7 +25,7 @@ namespace Gwen
         {
             m_fScale = 1.0f;
             gdispInit();
-            gdispClear(RGB2COLOR(0,0,0));
+            gdispClear(0);
         }
 
         ChibiGFX::~ChibiGFX()
@@ -25,7 +36,7 @@ namespace Gwen
         
         void ChibiGFX::SetDrawColor( Gwen::Color const& color )
         {
-          m_color = color;
+          m_color = RGB2COLOR(color.r, color.g, color.b);
         }
 
         inline Gwen::Color ChibiGFX::BlendColor(Gwen::Color const& c1, Gwen::Color const& c2) const
@@ -48,26 +59,48 @@ namespace Gwen
 
         void ChibiGFX::DrawFilledRect( Gwen::Rect const& rect ) const
         {
-          gdispFillArea(rect.x, rect.y, rect.w, rect.h, RGB2Color(this->m_color));
+	int x = GetRenderOffset().x + rect.x;
+	int y = GetRenderOffset().y + rect.y;
+          gdispFillArea(x, y, rect.w, rect.h, m_color);
+#ifdef DEBUG_RENDERER
+	  std::string tmp("DrawFilledRect [X:"+Gwen::Utility::ToString(x)+" Y:"+Gwen::Utility::ToString(y)+ \
+	  " W:"+Gwen::Utility::ToString(rect.w)+" H:"+Gwen::Utility::ToString(rect.h)+"]\r\n");
+	  chprintf((BaseSequentialStream *)&SD2, tmp.c_str());	
+#endif
         }
 
         void ChibiGFX::DrawLine( int x, int y, int a, int b ) const
         {
-          gdispDrawLine(x, y, a, b, RGB2Color(this->m_color));
+	x += GetRenderOffset().x;
+	y += GetRenderOffset().y;
+          gdispDrawLine(x, y, a, b, m_color);
         }
 
         void ChibiGFX::DrawLinedRect( Gwen::Rect const& rect ) const
         {
-            gdispFillArea(rect.x, rect.y, rect.w, 1, RGB2Color(this->m_color));
-            gdispFillArea(rect.x, rect.y + rect.h-1, rect.w, 1, RGB2Color(this->m_color));
+	const int x = GetRenderOffset().x + rect.x;
+	const int y = GetRenderOffset().y + rect.y;
+            gdispFillArea(x, y, rect.w, 1, m_color);
+            gdispFillArea(x, y + rect.h-1, rect.w, 1, m_color);
           
-            gdispFillArea(rect.x, rect.y, 1, rect.h, RGB2Color(this->m_color));
-            gdispFillArea(rect.x + rect.w-1, rect.y, 1, rect.h, RGB2Color(this->m_color));
+            gdispFillArea(x, y, 1, rect.h, m_color);
+            gdispFillArea(x + rect.w-1, y, 1, rect.h, m_color);
+#ifdef DEBUG_RENDERER
+	  std::string tmp("DrawLinedRect [X:"+Gwen::Utility::ToString(x)+" Y:"+Gwen::Utility::ToString(y)+ \
+	  " W:"+Gwen::Utility::ToString(rect.w)+" H:"+Gwen::Utility::ToString(rect.h)+"]\r\n");
+	  chprintf((BaseSequentialStream *)&SD2, tmp.c_str());	
+#endif
         }
 
         void ChibiGFX::DrawPixel( int x, int y) const
         {
-            gdispFillArea(x, y, 1, 1, RGB2Color(this->m_color));
+	x += GetRenderOffset().x;
+	y += GetRenderOffset().y;
+            gdispFillArea(x, y, 1, 1, m_color);
+#ifdef DEBUG_RENDERER
+	  std::string tmp("DrawPixel [X:"+Gwen::Utility::ToString(x)+" Y:"+Gwen::Utility::ToString(y)+"]\r\n");
+	  chprintf((BaseSequentialStream *)&SD2, tmp.c_str());	
+#endif
         }
 
         void ChibiGFX::DrawShavedCornerRect( Gwen::Rect rect, bool bSlight ) const
@@ -75,28 +108,29 @@ namespace Gwen
             // Draw INSIDE the w/h.
             rect.w -= 1;
             rect.h -= 1;
-
+	const int x = GetRenderOffset().x + rect.x;
+	const int y = GetRenderOffset().y + rect.y;
             if ( bSlight )
             {
-                DrawFilledRect( Gwen::Rect( rect.x+1, rect.y, rect.w-1, 1 ) );
-                DrawFilledRect( Gwen::Rect( rect.x+1, rect.y + rect.h, rect.w-1, 1 ) );
+                DrawFilledRect( Gwen::Rect( x+1, y, rect.w-1, 1 ) );
+                DrawFilledRect( Gwen::Rect( x+1, y + rect.h, rect.w-1, 1 ) );
 
-                DrawFilledRect( Gwen::Rect( rect.x, rect.y+1, 1, rect.h-1 ) );
-                DrawFilledRect( Gwen::Rect( rect.x + rect.w, rect.y+1, 1, rect.h-1 ) );
+                DrawFilledRect( Gwen::Rect( x, y+1, 1, rect.h-1 ) );
+                DrawFilledRect( Gwen::Rect( x + rect.w, y+1, 1, rect.h-1 ) );
                 return;
             }
 
-            DrawPixel( rect.x+1, rect.y+1 );
-            DrawPixel( rect.x+rect.w-1, rect.y+1 );
+            DrawPixel( x+1, y+1 );
+            DrawPixel( x+rect.w-1, y+1 );
 
-            DrawPixel( rect.x+1, rect.y+rect.h-1 );
-            DrawPixel( rect.x+rect.w-1, rect.y+rect.h-1 );
+            DrawPixel( x+1, y+rect.h-1 );
+            DrawPixel( x+rect.w-1, y+rect.h-1 );
 
-            DrawFilledRect( Gwen::Rect( rect.x+2, rect.y, rect.w-3, 1 ) );
-            DrawFilledRect( Gwen::Rect( rect.x+2, rect.y + rect.h, rect.w-3, 1 ) );
+            DrawFilledRect( Gwen::Rect( x+2, y, rect.w-3, 1 ) );
+            DrawFilledRect( Gwen::Rect( x+2, y + rect.h, rect.w-3, 1 ) );
 
-            DrawFilledRect( Gwen::Rect( rect.x, rect.y+2, 1, rect.h-3 ) );
-            DrawFilledRect( Gwen::Rect( rect.x + rect.w, rect.y+2, 1, rect.h-3 ) );
+            DrawFilledRect( Gwen::Rect( x, y+2, 1, rect.h-3 ) );
+            DrawFilledRect( Gwen::Rect( x + rect.w, y+2, 1, rect.h-3 ) );
         }
 
         void ChibiGFX::DrawMissingImage( Gwen::Rect const& pTargetRect )
@@ -107,8 +141,14 @@ namespace Gwen
 #ifndef GWEN_NO_UNICODE
         void ChibiGFX::RenderText( Gwen::Font* pFont, Gwen::Point const&  pos, const Gwen::UnicodeString& text ) const
         {
+	const int x = GetRenderOffset().x + pos.x;
+	const int y = GetRenderOffset().y + pos.y;
             float fSize = pFont->size * Scale();
-            gdispDrawString(pos.x, pos.y, Gwen::Utility::UnicodeToString(text).c_str(), &fontUI2, RGB2Color(m_color));
+            gdispDrawString(x, y, Gwen::Utility::UnicodeToString(text).c_str(), &fontUI2, m_color);
+#ifdef DEBUG_RENDERER
+	  std::string tmp("RenderText [X:"+Gwen::Utility::ToString(x)+" Y:"+Gwen::Utility::ToString(y)+"]\r\n");
+	  chprintf((BaseSequentialStream *)&SD2, tmp.c_str());	
+#endif
         }
 	
         Gwen::Point ChibiGFX::MeasureText( Gwen::Font* pFont, const Gwen::UnicodeString& text ) const
@@ -124,8 +164,14 @@ namespace Gwen
 #endif
         void ChibiGFX::RenderText( Gwen::Font* pFont, Gwen::Point const&  pos, const Gwen::String& text ) const
         {
+	const int x = GetRenderOffset().x + pos.x;
+	const int y = GetRenderOffset().y + pos.y;
             float fSize = pFont->size * Scale();
-            gdispDrawString(pos.x, pos.y, text.c_str(), &fontUI2, RGB2Color(m_color));
+            gdispDrawString(x, y, text.c_str(), &fontUI2, m_color);
+#ifdef DEBUG_RENDERER
+	  std::string tmp("RenderText [X:"+Gwen::Utility::ToString(x)+" Y:"+Gwen::Utility::ToString(y)+" Text: "+text+ "]\r\n");
+	  chprintf((BaseSequentialStream *)&SD2, tmp.c_str());	
+#endif
         }
 
         Gwen::Point ChibiGFX::MeasureText( Gwen::Font* pFont, const Gwen::String& text ) const
@@ -136,6 +182,11 @@ namespace Gwen
 
             p.x = gdispGetStringWidth(text.c_str(), &fontUI2);
             p.y = gdispGetFontMetric(&fontUI2, fontHeight);
+		
+#ifdef DEBUG_RENDERER
+	  std::string tmp("MeasureText [X:"+Gwen::Utility::ToString(p.x)+" Y:"+Gwen::Utility::ToString(p.y)+" Text: "+text+ "]\r\n");
+	  chprintf((BaseSequentialStream *)&SD2, tmp.c_str());	
+#endif
             return p;
         }
 

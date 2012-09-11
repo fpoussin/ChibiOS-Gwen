@@ -13,6 +13,15 @@ extern "C" {
     #include "touchpad.h"
 }
 
+#define DEBUG_INPUT
+
+#ifdef DEBUG_INPUT
+extern "C" {
+	#include "chprintf.h"
+	#include <string>
+}
+#endif
+
 namespace Gwen
 {
     namespace Input
@@ -49,16 +58,32 @@ namespace Gwen
                     // Current coordinates
                     int x = ((float)SCREEN_WIDTH-((float)tpReadX()*2.0f))*TP_W_FIX;
                     int y = ((float)tpReadY()/2.0f)*TP_H_FIX;
-                  
-                    // Last coordinates
-                    int dx = x - m_MouseX;
-                    int dy = x - m_MouseY;
+			
+		     int dx, dy;
+			
+		     if (touched) {
+			    // Last coordinates
+			    dx = x - m_MouseX;
+			    dy = x - m_MouseY;
 
-                    m_MouseX = x;
-                    m_MouseY = y;
+			    m_MouseX = x;
+			    m_MouseY = y;
+		     }
+		     else {
+			    // don't move
+			    dx = 0;
+			    dy = 0;
+		     }
+		     
+#ifdef DEBUG_INPUT
+	  std::string tmp("ProcessTouch [X:"+Gwen::Utility::ToString(m_MouseX)+" Y:"+Gwen::Utility::ToString(m_MouseY) \
+		     +" DX:"+Gwen::Utility::ToString(dx)+" DY:"+Gwen::Utility::ToString(dy)+"]\r\n");
+	  chprintf((BaseSequentialStream *)&SD2, tmp.c_str());	
+#endif
 
                    /* We send the signal that the mouse has moved, then that the primary mouse button has been pushed/released */
                     m_Canvas->InputMouseMoved( m_MouseX, m_MouseY, dx, dy );
+			
 		    return m_Canvas->InputMouseButton( 1, touched );
                 }
                 
@@ -92,6 +117,10 @@ namespace Gwen
 			{
 				if (palReadPad(iter->Port, iter->Pad)) {
 					int trkey = TranslateKeyCode(iter->Key);
+#ifdef DEBUG_INPUT
+	  std::string tmp("ProcessKeys [Key:"+Gwen::Utility::ToString(iter->Key)+"]\r\n");
+	  chprintf((BaseSequentialStream *)&SD2, tmp.c_str());
+#endif
 					// We bounce the key
 					m_Canvas->InputKey( trkey, true );
 					m_Canvas->InputKey( trkey, false );

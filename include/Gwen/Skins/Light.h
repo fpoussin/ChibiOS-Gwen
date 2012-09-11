@@ -528,12 +528,14 @@ namespace Gwen
 						m_Render->SetDrawColor( m_colControlDark );
 						m_Render->DrawFilledRect( Gwen::Rect( 1, 1, rect.w-2, rect.h-2 ) );
 				
+						m_Render->SetDrawColor( Gwen::Color( 255, 255, 255, 150 ) );
+						m_Render->DrawFilledRect( Gwen::Rect( 1, 1, rect.w-2, rect.h*0.45f ) );
+						
 						//Right half
 						m_Render->SetDrawColor( FillColour );
 						m_Render->DrawFilledRect( Gwen::Rect( 1, 1, rect.w*progress-2, rect.h-2 ) );
 
-						m_Render->SetDrawColor( Gwen::Color( 255, 255, 255, 150 ) );
-						m_Render->DrawFilledRect( Gwen::Rect( 1, 1, rect.w-2, rect.h*0.45f ) );
+
 					}
 					else
 					{
