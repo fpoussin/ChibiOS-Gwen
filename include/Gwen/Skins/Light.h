@@ -159,20 +159,26 @@ namespace Gwen
 
 				virtual void DrawWindowCloseButton( Gwen::Controls::Base* control, bool bDepressed, bool bHovered, bool bDisabled )
 				{
-					// TODO.
 					DrawButton( control, bDepressed, bHovered, bDisabled );
+          Gwen::Rect rect = control->GetRenderBounds();
+          m_Render->SetDrawColor( m_colControlOutlineNormal );
+          
+        const unsigned char cross[8] = {0x3c,	0x18,	0x81,	0xc3,	0xc3,	0x81,	0x18,	0x3c};
+        m_Render->DrawBlackImage( Gwen::Rect((rect.w/2)-4, (rect.h/2)-4, 8, 8), cross);
 				}
 
 				virtual void DrawWindowMaximizeButton( Gwen::Controls::Base* control, bool bDepressed, bool bHovered, bool bDisabled, bool bMaximized )
 				{
-					// TODO.
 					DrawButton( control, bDepressed, bHovered, bDisabled );
+          m_Render->SetDrawColor( m_colControlOutlineNormal );
+          m_Render->DrawLinedRect( Gwen::Rect(0, 0, 8, 8) );
 				}
 
 				virtual void DrawWindowMinimizeButton( Gwen::Controls::Base* control, bool bDepressed, bool bHovered, bool bDisabled )
 				{
-					// TODO.
 					DrawButton( control, bDepressed, bHovered, bDisabled );
+          m_Render->SetDrawColor( m_colControlOutlineNormal );
+          m_Render->DrawFilledRect( Gwen::Rect(0, 0, 8, 1)  );
 				}
 
 				virtual void DrawMenuItem( Gwen::Controls::Base* control, bool bSubmenuOpen, bool bChecked )
@@ -521,6 +527,7 @@ namespace Gwen
 				{
 					Gwen::Rect rect = control->GetRenderBounds();
 					Gwen::Color FillColour( 0, 211, 40, 255 );
+          Gwen::Color FillColourLight( 0, 211*1.1, 40*1.1, 255 );
 
 					if ( isHorizontal )
 					{
@@ -529,12 +536,13 @@ namespace Gwen
 						m_Render->DrawFilledRect( Gwen::Rect( 1, 1, rect.w-2, rect.h-2 ) );
 				
 						m_Render->SetDrawColor( Gwen::Color( 255, 255, 255, 150 ) );
-						m_Render->DrawFilledRect( Gwen::Rect( 1, 1, rect.w-2, rect.h*0.45f ) );
+						m_Render->DrawFilledRect( Gwen::Rect( 1, 1, (rect.w-2), (rect.h-2)*0.5f ) );
 						
 						//Right half
+						m_Render->SetDrawColor( FillColourLight );
+						m_Render->DrawFilledRect( Gwen::Rect( 1, 1, rect.w*progress, rect.h*0.5f ) );
 						m_Render->SetDrawColor( FillColour );
-						m_Render->DrawFilledRect( Gwen::Rect( 1, 1, rect.w*progress-2, rect.h-2 ) );
-
+						m_Render->DrawFilledRect( Gwen::Rect( 1, (rect.h+1)*0.5f , rect.w*progress, (rect.h+1)*0.5f) );
 
 					}
 					else
@@ -542,13 +550,16 @@ namespace Gwen
 						//Background 
 						m_Render->SetDrawColor( m_colControlDark );
 						m_Render->DrawFilledRect( Gwen::Rect( 1, 1, rect.w-2, rect.h-2 ) );
-
-						//Top half
-						m_Render->SetDrawColor( FillColour );
-						m_Render->DrawFilledRect( Gwen::Rect( 1, 1 + (rect.h * (1 - progress)), rect.w-2, rect.h * progress - 2 ) );
-
+            
 						m_Render->SetDrawColor( Gwen::Color( 255, 255, 255, 150 ) );
 						m_Render->DrawFilledRect( Gwen::Rect( 1, 1, rect.w*0.45f, rect.h-2 ) );
+
+						//Top half
+						m_Render->SetDrawColor( FillColourLight );
+						m_Render->DrawFilledRect( Gwen::Rect( 1, 1 + (rect.h * (1 - progress)), rect.w*0.5f, rect.h * progress - 2 ) );
+						m_Render->SetDrawColor( FillColour );
+						m_Render->DrawFilledRect( Gwen::Rect( rect.w*0.5f, 1 + (rect.h * (1 - progress)), rect.w*0.5f, rect.h * progress - 2 ) );
+
 					}
 
 					m_Render->SetDrawColor( Gwen::Color( 255, 255, 255, 150 ) );

@@ -38,7 +38,7 @@ namespace Gwen
                 virtual void End(){}
                 virtual void SetDrawColor( Gwen::Color const& color );
                 virtual void DrawPixel( int x, int y) const;
-                virtual void DrawLine( int x, int y, int a, int b ) const;
+                virtual void DrawLine(Gwen::Point const&  pos1, Gwen::Point const&  pos2) const;
                 virtual void DrawFilledRect( Gwen::Rect const& rect ) const;
                 virtual void DrawLinedRect( Gwen::Rect const& rect ) const;
                 virtual void DrawShavedCornerRect( Gwen::Rect rect, bool bSlight = false ) const;
@@ -50,6 +50,7 @@ namespace Gwen
                 virtual void FreeTexture( Gwen::Texture* pTexture ){}
                 virtual void DrawTexturedRect( Gwen::Texture* pTexture, Gwen::Rect const&  pTargetRect, float u1=0.0f, float v1=0.0f, float u2=1.0f, float v2=1.0f ){}
                 virtual void DrawMissingImage( Gwen::Rect const& pTargetRect );
+                virtual void DrawBlackImage( Gwen::Rect const&  rect, const unsigned char* image ) ;
 
                 //You can also ignore these if you don't care about having text on your GUI. That would be silly though
                 virtual void LoadFont( Gwen::Font* pFont );

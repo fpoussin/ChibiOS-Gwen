@@ -69,11 +69,14 @@ namespace Gwen
 #endif
         }
 
-        void ChibiGFX::DrawLine( int x, int y, int a, int b ) const
+        void ChibiGFX::DrawLine(Gwen::Point const&  pos1, Gwen::Point const&  pos2) const
         {
-	x += GetRenderOffset().x;
-	y += GetRenderOffset().y;
-          gdispDrawLine(x, y, a, b, m_color);
+          Gwen::Point offset = GetRenderOffset();
+          const int x1 = offset.x + pos1.x;
+          const int y1 = offset.y + pos1.y;
+          const int x2 = offset.x + pos2.x;
+          const int y2 = offset.y + pos2.y;
+          gdispDrawLine(x1, y1, x2, y2, m_color);
         }
 
         void ChibiGFX::DrawLinedRect( Gwen::Rect const& rect ) const
@@ -193,14 +196,24 @@ namespace Gwen
         void ChibiGFX::LoadFont( Gwen::Font* font )
         {
             font->realsize = font->size * Scale();
-
-            //font->data =  (void *)&OpenSans_ttf;
         }
 
         void ChibiGFX::FreeFont( Gwen::Font* pFont )
         {
             pFont->data = NULL;
         }
+        
+        void ChibiGFX::DrawBlackImage( Gwen::Rect const&  rect, const unsigned char* image ) 
+        {
+          color_t tmp[8];
+          for (int j=0;j<rect.h;j++) {
+                for (int i=0;i<8;i++) {
+                  tmp[i] = image[j] & (1 << i);
+                }
+                GDISP_LLD(blitarea)(rect.x, rect.y+j, 8, 1, tmp) ;
+          }
+        }
+        
 
     }
 }
