@@ -24,13 +24,13 @@ void Dragger::OnMouseClickLeft( int x, int y, bool bDown )
 {
 	if ( bDown )
 	{
-		m_bDepressed = true;
+		//m_bDepressed = true; // This is broken...
 
-		if ( m_pTarget)
-			m_HoldPos = m_pTarget->CanvasPosToLocal( Gwen::Point( x, y ) );
+		//if ( m_pTarget)
+			//m_HoldPos = m_pTarget->CanvasPosToLocal( Gwen::Point( x, y ) );
 
-		Gwen::MouseFocus = this;
-		onDragStart.Call( this );
+		//Gwen::MouseFocus = this;
+		//onDragStart.Call( this );
 	}
 	else
 	{

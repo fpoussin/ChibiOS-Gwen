@@ -13,7 +13,7 @@ extern "C" {
     #include "touchpad.h"
 }
 
-#define DEBUG_INPUT
+//#define DEBUG_INPUT
 
 #ifdef DEBUG_INPUT
 extern "C" {
@@ -64,7 +64,7 @@ namespace Gwen
 		     if (touched) {
 			    // Last coordinates
 			    dx = x - m_MouseX;
-			    dy = x - m_MouseY;
+			    dy = y - m_MouseY;
 
 			    m_MouseX = x;
 			    m_MouseY = y;
@@ -81,10 +81,11 @@ namespace Gwen
 	  chprintf((BaseSequentialStream *)&SD2, tmp.c_str());	
 #endif
 
+		     if (dx>2 || dx<-2 || dy>2 || dy<-2) // 4px dead zone
                    /* We send the signal that the mouse has moved, then that the primary mouse button has been pushed/released */
                     m_Canvas->InputMouseMoved( m_MouseX, m_MouseY, dx, dy );
 			
-		    return m_Canvas->InputMouseButton( 1, touched );
+		    return m_Canvas->InputMouseButton( 0, touched );
                 }
                 
                 // Will be used for push buttons to keyboard key translation
