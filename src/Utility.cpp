@@ -10,15 +10,33 @@
 
 using namespace Gwen;
 
-template <typename T>
-const T& Gwen::Utility::Max( const T& x, const T& y )
+const int& Gwen::Utility::Max( const int& x, const int& y )
+{
+  if ( y < x ) return x;
+  return y;
+}
+const unsigned int& Gwen::Utility::Max( const unsigned int& x, const unsigned int& y )
+{
+  if ( y < x ) return x;
+  return y;
+}
+const float& Gwen::Utility::Max( const float& x, const float& y )
 {
   if ( y < x ) return x;
   return y;
 }
 
-template <typename T>
-const T& Gwen::Utility::Min( const T& x, const T& y )
+const int& Gwen::Utility::Min( const int& x, const int& y )
+{
+  if ( y > x ) return x;
+  return y;
+}
+const unsigned int& Gwen::Utility::Min( const unsigned int& x, const unsigned int& y )
+{
+  if ( y > x ) return x;
+  return y;
+}
+const float& Gwen::Utility::Min( const float& x, const float& y )
 {
   if ( y > x ) return x;
   return y;

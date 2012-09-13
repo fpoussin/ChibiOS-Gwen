@@ -18,10 +18,13 @@ namespace Gwen
 
 	namespace Utility
 	{
-		template <typename T>
-        const T& Max( const T& x, const T& y );
-        template <typename T>
-        const T& Min( const T& x, const T& y );
+        const int& Max( const int& x, const int& y );
+	const unsigned int& Max( const unsigned int& x, const unsigned int& y );
+	const float& Max( const float& x, const float& y );
+		
+        const int& Min( const int& x, const int& y );
+	const unsigned int& Min( const unsigned int& x, const unsigned int& y );
+	const float& Min( const float& x, const float& y );
 
 #ifndef GWEN_NO_UNICODE
         String UnicodeToString( const UnicodeString& strIn );

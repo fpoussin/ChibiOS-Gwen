@@ -89,7 +89,7 @@ namespace Gwen
                 }
                 
                 // Will be used for push buttons to keyboard key translation
-                unsigned char TranslateKeyCode( int iKeyCode )
+                unsigned char TranslateKeyCode( unsigned char iKeyCode )
                 {
 			switch ( iKeyCode )
 			{
@@ -105,28 +105,34 @@ namespace Gwen
 				default:
 				break;
 			}
-
 			return Gwen::Key::Invalid;
                 }
 		
-		void AddKey(GPIO_TypeDef* Port, unsigned char Pad, int Key) {
+		void AddKey(GPIO_TypeDef* Port, unsigned char Pad, unsigned char Key) {
 			m_KeyList.push_back({Port, Pad, Key});
+#ifdef DEBUG_INPUT
+	  std::string tmp("AddKey [Key:"+Gwen::Utility::ToString(Key)+"]\r\n");
+	  chprintf((BaseSequentialStream *)&SD2, tmp.c_str());
+#endif
 		}
                 
-                void ProcessKeys() {
+                bool ProcessKeys() {
+			bool res = false;
 			for(std::list<InputPad>::iterator iter = m_KeyList.begin(); iter != m_KeyList.end(); iter++)
 			{
 				if (palReadPad(iter->Port, iter->Pad)) {
-					int trkey = TranslateKeyCode(iter->Key);
+					unsigned char trkey = TranslateKeyCode(iter->Key);
 #ifdef DEBUG_INPUT
-	  std::string tmp("ProcessKeys [Key:"+Gwen::Utility::ToString(iter->Key)+"]\r\n");
+	  std::string tmp("ProcessKeys [Key:"+Gwen::Utility::ToString(trkey)+"]\r\n");
 	  chprintf((BaseSequentialStream *)&SD2, tmp.c_str());
 #endif
 					// We bounce the key
 					m_Canvas->InputKey( trkey, true );
 					m_Canvas->InputKey( trkey, false );
+					res = true;
 				}
 			}
+			return res;
                 }
 
                 protected:
@@ -135,7 +141,7 @@ namespace Gwen
 			int m_MouseY;
 			const SPIConfig m_Spicfg;
 			const TOUCHPADDriver m_Touchpad;
-			typedef struct InputPad {GPIO_TypeDef* Port; unsigned char Pad;	int Key; };
+			typedef struct InputPad {GPIO_TypeDef* Port; unsigned char Pad; unsigned char Key; };
 			std::list<InputPad> m_KeyList;
         };
     }
