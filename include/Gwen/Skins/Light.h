@@ -164,7 +164,7 @@ namespace Gwen
           m_Render->SetDrawColor( m_colControlOutlineNormal );
           
         const unsigned char cross[8] = {0x3c,	0x18,	0x81,	0xc3,	0xc3,	0x81,	0x18,	0x3c};
-        m_Render->DrawBlackImage( Gwen::Rect((rect.w/2)-4, (rect.h/2)-4, 8, 8), cross);
+        m_Render->DrawShape( Gwen::Rect((rect.w/2)-4, (rect.h/2)-4, 8, 8), cross);
 				}
 
 				virtual void DrawWindowMaximizeButton( Gwen::Controls::Base* control, bool bDepressed, bool bHovered, bool bDisabled, bool bMaximized )

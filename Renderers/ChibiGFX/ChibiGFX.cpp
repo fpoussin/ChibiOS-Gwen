@@ -203,14 +203,14 @@ namespace Gwen
             pFont->data = NULL;
         }
         
-        void ChibiGFX::DrawBlackImage( Gwen::Rect const&  rect, const unsigned char* image ) 
+        void ChibiGFX::DrawShape( Gwen::Rect const&  rect, const unsigned char* image ) 
         {
           color_t tmp[8];
           for (int j=0;j<rect.h;j++) {
                 for (int i=0;i<8;i++) {
                   tmp[i] = image[j] & (1 << i);
                 }
-                GDISP_LLD(blitarea)(rect.x, rect.y+j, 8, 1, tmp) ;
+                gdispBlitAreaEx(rect.x, rect.y+j, 8, 1, 0, 0, 8, tmp) ;
           }
         }
         

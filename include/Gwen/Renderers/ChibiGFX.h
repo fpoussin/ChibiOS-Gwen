@@ -50,7 +50,7 @@ namespace Gwen
                 virtual void FreeTexture( Gwen::Texture* pTexture ){}
                 virtual void DrawTexturedRect( Gwen::Texture* pTexture, Gwen::Rect const&  pTargetRect, float u1=0.0f, float v1=0.0f, float u2=1.0f, float v2=1.0f ){}
                 virtual void DrawMissingImage( Gwen::Rect const& pTargetRect );
-                virtual void DrawBlackImage( Gwen::Rect const&  rect, const unsigned char* image ) ;
+                virtual void DrawShape( Gwen::Rect const&  rect, const unsigned char* image ) ;
 
                 //You can also ignore these if you don't care about having text on your GUI. That would be silly though
                 virtual void LoadFont( Gwen::Font* pFont );

@@ -60,7 +60,7 @@ namespace Gwen
 				virtual void FreeTexture( Gwen::Texture* pTexture ){ (void*) pTexture; };
 				virtual void DrawTexturedRect( Gwen::Texture* pTexture, Gwen::Rect pTargetRect, float u1=0.0f, float v1=0.0f, float u2=1.0f, float v2=1.0f ){ (void*) pTexture; };
 				virtual void DrawMissingImage( Gwen::Rect pTargetRect );
-        virtual void DrawBlackImage( Gwen::Rect const&  rect, const unsigned char* image ) {};
+        virtual void DrawShape( Gwen::Rect const&  rect, const unsigned char* image ) {};
 				virtual Gwen::Color PixelColour( Gwen::Texture* pTexture, unsigned int x, unsigned int y, const Gwen::Color& col_default = Gwen::Color( 255, 255, 255, 255 ) ){ return col_default; }
 
 				virtual ICacheToTexture* GetCTT() { return NULL; }
