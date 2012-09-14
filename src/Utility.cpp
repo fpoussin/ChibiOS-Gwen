@@ -10,37 +10,6 @@
 
 using namespace Gwen;
 
-const int& Gwen::Utility::Max( const int& x, const int& y )
-{
-  if ( y < x ) return x;
-  return y;
-}
-const unsigned int& Gwen::Utility::Max( const unsigned int& x, const unsigned int& y )
-{
-  if ( y < x ) return x;
-  return y;
-}
-const float& Gwen::Utility::Max( const float& x, const float& y )
-{
-  if ( y < x ) return x;
-  return y;
-}
-
-const int& Gwen::Utility::Min( const int& x, const int& y )
-{
-  if ( y > x ) return x;
-  return y;
-}
-const unsigned int& Gwen::Utility::Min( const unsigned int& x, const unsigned int& y )
-{
-  if ( y > x ) return x;
-  return y;
-}
-const float& Gwen::Utility::Min( const float& x, const float& y )
-{
-  if ( y > x ) return x;
-  return y;
-}
 #ifndef GWEN_NO_UNICODE
 String Gwen::Utility::UnicodeToString( const UnicodeString& strIn )
 {
@@ -66,16 +35,6 @@ UnicodeString Gwen::Utility::StringToUnicode( const String& strIn )
     return temp;
 }
 #endif
-
-template<typename T> void Gwen::Utility::Replace( T& str, const T& strFind, const T& strReplace )
-{
-    size_t pos = 0;
-    while( (pos = str.find(strFind, pos) ) != T::npos )
-    {
-        str.replace( pos, strFind.length(), strReplace );
-        pos += strReplace.length();
-    }
-}
 
 Gwen::Rect Gwen::Utility::ClampRectToRect( Gwen::Rect inside, Gwen::Rect outside, bool clampSize )
 {
@@ -321,13 +280,6 @@ void Gwen::Utility::Strings::Strip( Gwen::String& str, const Gwen::String& chars
 	}
 }
 #endif
-template <typename T>
-T Gwen::Utility::Strings::TrimLeft( const T& str, const T& strChars )
-{
-    T outstr = str;
-    outstr.erase( 0, outstr.find_first_not_of( strChars ) );
-    return outstr;
-}
 
 
 

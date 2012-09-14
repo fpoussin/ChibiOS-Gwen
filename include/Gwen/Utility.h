@@ -18,20 +18,32 @@ namespace Gwen
 
 	namespace Utility
 	{
-        const int& Max( const int& x, const int& y );
-	const unsigned int& Max( const unsigned int& x, const unsigned int& y );
-	const float& Max( const float& x, const float& y );
-		
-        const int& Min( const int& x, const int& y );
-	const unsigned int& Min( const unsigned int& x, const unsigned int& y );
-	const float& Min( const float& x, const float& y );
+        template<typename T> 
+        const T& Max( const T& x, const T& y ) {  
+          if ( y < x ) return x;
+          return y;
+        };
+        
+        template<typename T> 
+        const T& Min( const T& x, const T& y ) {
+          if ( y > x ) return x;
+          return y;
+        };
 
 #ifndef GWEN_NO_UNICODE
         String UnicodeToString( const UnicodeString& strIn );
         UnicodeString StringToUnicode( const String& strIn );
 #endif
         template<typename T> 
-        void Replace( T& str, const T& strFind, const T& strReplace );
+        void Replace( T& str, const T& strFind, const T& strReplace )
+        {
+    size_t pos = 0;
+    while( (pos = str.find(strFind, pos) ) != T::npos )
+    {
+        str.replace( pos, strFind.length(), strReplace );
+        pos += strReplace.length();
+    }
+};
     
         String ToString( int num );
         String ToString( unsigned int num );
@@ -60,7 +72,12 @@ namespace Gwen
 
 
 			template <typename T>
-			T TrimLeft( const T& str, const T& strChars );
+			T TrimLeft( const T& str, const T& strChars )
+      {
+          T outstr = str;
+          outstr.erase( 0, outstr.find_first_not_of( strChars ) );
+          return outstr;
+      };
 
 			namespace To
 			{
