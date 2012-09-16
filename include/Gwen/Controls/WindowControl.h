@@ -53,6 +53,8 @@ namespace Gwen
 
 				void MakeModal( bool bDrawBackground = true );
 				void DestroyModal();
+				
+				static unsigned int GetCount(){return m_Count;};
 
 				Gwen::Event::Caller	onWindowClosed;
 
@@ -65,6 +67,7 @@ namespace Gwen
 				bool m_bDeleteOnClose;
 
 				ControlsInternal::Modal* m_Modal;
+				static unsigned int m_Count;
 		};
 	}
 }

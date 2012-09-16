@@ -15,11 +15,12 @@ using namespace Gwen;
 using namespace Gwen::Controls;
 using namespace Gwen::ControlsInternal;
 
-
+unsigned int WindowControl::m_Count = 0;
 GWEN_CONTROL_CONSTRUCTOR( WindowControl )
 {
 	m_Modal = NULL;
 	m_bDeleteOnClose = false;
+	WindowControl::m_Count++;
 
 	m_TitleBar = new Dragger( this );
 	m_TitleBar->SetHeight( 24 );
@@ -62,6 +63,7 @@ GWEN_CONTROL_CONSTRUCTOR( WindowControl )
 
 WindowControl::~WindowControl()
 {
+	WindowControl::m_Count--;
 	DestroyModal();
 }
 

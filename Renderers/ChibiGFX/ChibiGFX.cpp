@@ -208,9 +208,8 @@ namespace Gwen
           color_t tmp[8];
           for (int j=0;j<rect.h;j++) {
                 for (int i=0;i<8;i++) {
-                  tmp[i] = image[j] & (1 << i);
+                  if (!(image[j] & (1 << i)))  DrawPixel( j+rect.x, i+rect.y );
                 }
-                gdispBlitAreaEx(rect.x, rect.y+j, 8, 1, 0, 0, 8, tmp) ;
           }
         }
         
