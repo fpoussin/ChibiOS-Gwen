@@ -35,6 +35,7 @@ namespace Gwen
 
 			virtual void PostLayout( Skin::Base* skin )
 			{
+				(void)skin;
 				RefreshContainers();
 			}
 

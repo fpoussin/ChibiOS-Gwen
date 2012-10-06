@@ -48,25 +48,27 @@ namespace Gwen
 				virtual void Begin(){};
 				virtual void End(){};
 
-         virtual void SetDrawColor( Color const& color ){};
+         virtual void SetDrawColor( Color const& color ){ (void)color; };
 
-        virtual void DrawFilledRect( Gwen::Rect const& rect ) const{};
-        virtual void DrawLine(Gwen::Point const&  pos1, Gwen::Point const&  pos2) const{};
+        virtual void DrawFilledRect( Gwen::Rect const& rect ) const{ (void)rect; };
+        virtual void DrawLine(Gwen::Point const&  pos1, Gwen::Point const&  pos2) const{ (void)pos1; (void)pos2; };
 
 				virtual void StartClip(){};
 				virtual void EndClip(){};
 
-				virtual void LoadTexture( Gwen::Texture* pTexture ){ (void*) pTexture; };
-				virtual void FreeTexture( Gwen::Texture* pTexture ){ (void*) pTexture; };
-				virtual void DrawTexturedRect( Gwen::Texture* pTexture, Gwen::Rect pTargetRect, float u1=0.0f, float v1=0.0f, float u2=1.0f, float v2=1.0f ){ (void*) pTexture; };
+				virtual void LoadTexture( Gwen::Texture* pTexture ){ (void)pTexture; };
+				virtual void FreeTexture( Gwen::Texture* pTexture ){ (void)pTexture; };
+				virtual void DrawTexturedRect( Gwen::Texture* pTexture, Gwen::Rect pTargetRect, float u1=0.0f, float v1=0.0f, float u2=1.0f, float v2=1.0f ){ 
+					(void)pTexture;  (void)pTargetRect; (void)u1; (void)v1; (void)u2; (void)v2;};
 				virtual void DrawMissingImage( Gwen::Rect pTargetRect );
-        virtual void DrawShape( Gwen::Rect const&  rect, const unsigned char* image ) {};
-				virtual Gwen::Color PixelColour( Gwen::Texture* pTexture, unsigned int x, unsigned int y, const Gwen::Color& col_default = Gwen::Color( 255, 255, 255, 255 ) ){ return col_default; }
+        virtual void DrawShape( Gwen::Rect const&  rect, const unsigned char* image ) { (void)rect; (void)image; };
+				virtual Gwen::Color PixelColour( Gwen::Texture* pTexture, unsigned int x, unsigned int y, const Gwen::Color& col_default = Gwen::Color( 255, 255, 255, 255 ) ){ 
+					(void)pTexture; (void)x; (void)y; return col_default; }
 
 				virtual ICacheToTexture* GetCTT() { return NULL; }
 
-				virtual void LoadFont( Gwen::Font* pFont ){ (void*) pFont; };
-				virtual void FreeFont( Gwen::Font* pFont ){ (void*) pFont; };
+				virtual void LoadFont( Gwen::Font* pFont ){ (void)pFont; };
+				virtual void FreeFont( Gwen::Font* pFont ){ (void)pFont; };
 #ifndef GWEN_NO_UNICODE
 				virtual void RenderText( Gwen::Font* pFont, Gwen::Point const& pos, const Gwen::UnicodeString& text ) const;
 				virtual Gwen::Point MeasureText( Gwen::Font* pFont, const Gwen::UnicodeString& text ) const;
@@ -127,14 +129,13 @@ namespace Gwen
 				//
 				// Self Initialization, shutdown
 				//
+				virtual bool InitializeContext( Gwen::WindowProvider* pWindow ){ (void)pWindow; return false; }
+				virtual bool ShutdownContext( Gwen::WindowProvider* pWindow ){ (void)pWindow; return false; }
+				virtual bool ResizedContext( Gwen::WindowProvider* pWindow, int w, int h ){ (void)pWindow; (void)w; (void)h; return false; }
 
-				virtual bool InitializeContext( Gwen::WindowProvider* pWindow ){ return false; }
-				virtual bool ShutdownContext( Gwen::WindowProvider* pWindow ){ return false; }
-				virtual bool ResizedContext( Gwen::WindowProvider* pWindow, int w, int h ){ return false; }
-
-				virtual bool BeginContext( Gwen::WindowProvider* pWindow){ return false; }
-				virtual bool EndContext( Gwen::WindowProvider* pWindow ){ return false; }
-				virtual bool PresentContext( Gwen::WindowProvider* pWindow ){ return false; }
+				virtual bool BeginContext( Gwen::WindowProvider* pWindow){ (void)pWindow; return false; }
+				virtual bool EndContext( Gwen::WindowProvider* pWindow ){ (void)pWindow; return false; }
+				virtual bool PresentContext( Gwen::WindowProvider* pWindow ){ (void)pWindow; return false; }
 
 
 

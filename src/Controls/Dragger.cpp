@@ -24,6 +24,7 @@ void Dragger::OnMouseClickLeft( int x, int y, bool bDown )
 {
 	if ( bDown )
 	{
+		(void)x; (void)y; 
 		//m_bDepressed = true; // This is broken...
 
 		//if ( m_pTarget)
@@ -61,11 +62,13 @@ void Dragger::OnMouseMoved( int x, int y, int deltaX, int deltaY )
 
 void Dragger::Render( Skin::Base* skin )
 {
+	(void)skin;
 	//skin->DrawButton(this,false,false, false);
 }
 
 void Dragger::OnMouseDoubleClickLeft( int x, int y )
 {
+	(void)x; (void)y; 
 	onDoubleClickLeft.Call( this );
 }
 

@@ -46,9 +46,10 @@ namespace Gwen
                 virtual void EndClip(){}
 
                 //You can ignore these if you just want to use the simple skin (rectangle based) and don't want to draw images on the GUI
-                virtual void LoadTexture( Gwen::Texture* pTexture ){}
-                virtual void FreeTexture( Gwen::Texture* pTexture ){}
-                virtual void DrawTexturedRect( Gwen::Texture* pTexture, Gwen::Rect const&  pTargetRect, float u1=0.0f, float v1=0.0f, float u2=1.0f, float v2=1.0f ){}
+                virtual void LoadTexture( Gwen::Texture* pTexture ){ (void)pTexture; }
+                virtual void FreeTexture( Gwen::Texture* pTexture ){ (void)pTexture; }
+                virtual void DrawTexturedRect( Gwen::Texture* pTexture, Gwen::Rect const&  pTargetRect, float u1=0.0f, float v1=0.0f, float u2=1.0f, float v2=1.0f ){
+			(void)pTexture; (void)pTargetRect; (void)u1; (void)v1; (void)u2; (void)v2;}
                 virtual void DrawMissingImage( Gwen::Rect const& pTargetRect );
                 virtual void DrawShape( Gwen::Rect const&  rect, const unsigned char* image ) ;
 

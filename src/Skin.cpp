@@ -84,6 +84,7 @@ namespace Gwen
 
 		void Base::DrawTreeNode( Controls::Base* ctrl, bool bOpen, bool bSelected, int iLabelHeight, int iLabelWidth, int iHalfWay, int iLastBranch, bool bIsRoot )
 		{
+			(void)ctrl; (void)bSelected; (void)iLabelWidth; 
 			GetRender()->SetDrawColor( Colors.Tree.Lines );
 
 			if ( !bIsRoot )

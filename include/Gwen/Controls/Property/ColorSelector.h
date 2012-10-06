@@ -47,6 +47,7 @@ namespace Gwen
 
 				void OnButtonPress( Controls::Base* control )
 				{
+					(void)control;
 					Gwen::Controls::Menu* pMenu = new Menu( GetCanvas() );
 					pMenu->SetSize( 256, 180 );
 					pMenu->SetDeleteOnClose( true );

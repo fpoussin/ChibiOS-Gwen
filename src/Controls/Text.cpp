@@ -30,6 +30,7 @@ Text::~Text()
 
 void Text::Layout( Skin::Base* skin )
 {
+	(void)skin;
 	if ( m_bTextChanged )
 	{
 		RefreshSize();
@@ -336,8 +337,9 @@ void Text::RefreshSizeWrap()
 void SplitWords(const Gwen::String &s, wchar_t delim, std::vector<Gwen::String> &elems) 
 {
 	Gwen::String str;
+	(void)delim;
 
-	for ( int i=0; i<s.length(); i++ )
+	for (unsigned int i=0; i<s.length(); i++ )
 	{
 		if ( s[i] == '\n' )
 		{
@@ -387,10 +389,10 @@ void Text::RefreshSizeWrap()
 	Gwen::String strLine;
 
 	std::vector<Gwen::String>::iterator it = words.begin();
-	for ( it; it != words.end(); ++it )
+	for ( ; it != words.end(); ++it )
 	{
 		bool bFinishLine = false;
-		bool bWrapped = false;
+		//bool bWrapped = false;
 
 		// If this word is a newline - make a newline (we still add it to the text)
 		if ( (*it).c_str()[0] == '\n' ) bFinishLine = true;
@@ -399,7 +401,7 @@ void Text::RefreshSizeWrap()
 		{
 			strLine += (*it);
 			Gwen::Point p = GetSkin()->GetRender()->MeasureText( GetFont(), strLine );
-			if ( p.x > Width() ) { bFinishLine = true; bWrapped = true; }
+			if ( p.x > Width() ) { bFinishLine = true; /*bWrapped = true;*/ }
 		}
 
 		// If this is the last word then finish the line
@@ -415,7 +417,7 @@ void Text::RefreshSizeWrap()
 				t->SetString( strLine.substr( 0, strLine.length() - (*it).length() ) );
 				t->RefreshSize();
 				t->SetPos( x, y );
-			m_Lines.push_back( t );
+				m_Lines.push_back( t );
 
 			// newline should start with the word that was too big
 			strLine = *it;

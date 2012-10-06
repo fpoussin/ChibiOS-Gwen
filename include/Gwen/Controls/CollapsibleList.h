@@ -88,6 +88,7 @@ namespace Gwen
 
 				virtual void OnSelection( Gwen::Controls::CollapsibleCategory* pControl, Gwen::Controls::Button* pSelected )
 				{
+					(void)pControl; (void)pSelected;
 					onSelection.Call( this );
 				}
 

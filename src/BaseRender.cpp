@@ -31,7 +31,7 @@ namespace Gwen
 
 		void Base::RenderText( Gwen::Font* pFont, Gwen::Point const& pos, const Gwen::String& text ) const
 		{
-
+			(void)pFont; (void)pos; (void)text; 
 		}
 
 		Gwen::Point Base::MeasureText( Gwen::Font* pFont, const Gwen::String& text ) const

@@ -43,6 +43,7 @@ namespace Gwen
 
 					virtual void SetPropertyValue( const TextObject& v, bool bFireChangeEvents )
 					{
+						(void)bFireChangeEvents;
 #ifndef GWEN_NO_UNICODE
 						if ( v == L"1" || v == L"true" || v == L"TRUE" || v == L"yes" || v == L"YES" )
 #else

@@ -212,6 +212,7 @@ namespace Gwen
 
 					unsigned int RowCount( int i )
 					{
+						(void)i;
 						return NumChildren();
 					}
 

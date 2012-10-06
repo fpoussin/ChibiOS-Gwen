@@ -1144,7 +1144,7 @@ TextObject Base::GetValue()
 
 void Base::SetValue( const TextObject& strValue )
 {
-
+	(void)strValue;
 }
 
 int Base::GetNamedChildren( Gwen::ControlList& list, const Gwen::String& strName, bool bDeep )

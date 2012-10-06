@@ -28,6 +28,7 @@ namespace Gwen
 
 				void PostLayout( Skin::Base* skin )
 				{
+					(void)skin;
 					Gwen::Rect	bounds = GetInnerBounds();
 					Gwen::Point pos = Point( bounds.x, bounds.y );
 

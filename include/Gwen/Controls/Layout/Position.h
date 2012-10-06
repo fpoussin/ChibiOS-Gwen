@@ -29,6 +29,7 @@ namespace Gwen
 
 					void PostLayout( Skin::Base* skin )
 					{
+						(void)skin;
 						for ( Base::List::iterator it = Children.begin(); it != Children.end(); ++it )
 						{
 							Base* pChild = *it;

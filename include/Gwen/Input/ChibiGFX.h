@@ -154,7 +154,7 @@ namespace Gwen
 				const SPIConfig m_Spicfg;
 				const TOUCHPADDriver m_Touchpad;
 			#endif
-			typedef struct InputPad {GPIO_TypeDef* Port; unsigned char Pad; unsigned char Key; };
+			struct InputPad {GPIO_TypeDef* Port; unsigned char Pad; unsigned char Key; };
 			std::vector<InputPad> m_KeyList;
         };
     }

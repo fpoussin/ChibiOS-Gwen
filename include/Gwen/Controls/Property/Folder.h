@@ -29,6 +29,7 @@ namespace Gwen
 
 				void OnButtonPress( Controls::Base* control )
 				{
+					(void)control;
 					Gwen::Dialogs::FolderOpen( true, m_strDialogName, m_TextBox->GetText().Get(), this, &Folder::EventFilePicked );
 				}
 
@@ -37,9 +38,7 @@ namespace Gwen
 					m_TextBox->SetText( info.String );
 				}
 
-
 				String	m_strDialogName;
-
 			};
 		}
 	}
