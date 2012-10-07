@@ -66,8 +66,8 @@ namespace Gwen
 				if ( !m_Canvas ) return false;
 
 				// Current coordinates
-				int x = (tpReadY()*2)*TP_W_FIX;
-				int y = (tpReadX()/2)*TP_H_FIX;
+				int x = tpReadX()*TP_W_FIX;
+				int y = tpReadY()*TP_H_FIX;
 
 				int dx, dy;
 
