@@ -10,7 +10,7 @@ extern "C" {
     #include "ch.h"
     #include "hal.h"
     #include "gdisp_connector.h"
-    #include "touchpad.h"
+    #include "touchscreen.h"
 }
 
 //#define DEBUG_INPUT
@@ -32,8 +32,8 @@ namespace Gwen
             public:
               
                 enum KB_CODES {KB_BACK = 0, KB_RETURN, KB_ESCAPE, KB_TAB, KB_SPACE, KB_UP, KB_DOWN, KB_LEFT, KB_RIGHT};
-	#if defined(GFX_USE_TOUCHPAD)
-                ChibiGFX() : m_Spicfg({NULL, TP_CS_PORT, TP_CS, SPI_CR1_BR_1 | SPI_CR1_BR_0}), m_Touchpad({&TP_SPI, &m_Spicfg, TP_IRQ_PORT, TP_IRQ, TRUE})
+	#if defined(GFX_USE_TOUCHSCREEN)
+                ChibiGFX() : m_Spicfg({NULL, TS_CS_PORT, TS_CS, SPI_CR1_BR_1 | SPI_CR1_BR_0}), m_Touchscreen({&TS_SPI, &m_Spicfg, TS_IRQ_PORT, TS_IRQ, TRUE})
 	#else
 		ChibiGFX()
 	#endif
@@ -46,15 +46,14 @@ namespace Gwen
                 void Initialize( Gwen::Controls::Canvas* c )
                 {
 			m_Canvas = c;
-			#if defined(GFX_USE_TOUCHPAD)
-				tpInit(&m_Touchpad);
-				tpCalibrate();
+			#if defined(GFX_USE_TOUCHSCREEN)
+				tsInit(&m_Touchscreen);
 			#endif
                 }
                 
                 bool Touched () {
-			#if defined(GFX_USE_TOUCHPAD)
-				return tpIRQ();
+			#if defined(GFX_USE_TOUCHSCREEN)
+				return tsPressed();
 			#else
 				return false;
 			#endif
@@ -62,12 +61,12 @@ namespace Gwen
 
                 bool ProcessTouch(bool touched)
                 {
-			#if defined(GFX_USE_TOUCHPAD)
+			#if defined(GFX_USE_TOUCHSCREEN)
 				if ( !m_Canvas ) return false;
 
 				// Current coordinates
-				int x = tpReadX();
-				int y = tpReadY();
+				int x = tsReadX();
+				int y = tsReadY();
 
 				int dx, dy;
 
@@ -150,9 +149,9 @@ namespace Gwen
 			Gwen::Controls::Canvas*	m_Canvas;
 			int m_MouseX;
 			int m_MouseY;
-			#if defined(GFX_USE_TOUCHPAD)
+			#if defined(GFX_USE_TOUCHSCREEN)
 				const SPIConfig m_Spicfg;
-				const TOUCHPADDriver m_Touchpad;
+				const TouchscreenDriver m_Touchscreen;
 			#endif
 			struct InputPad {GPIO_TypeDef* Port; unsigned char Pad; unsigned char Key; };
 			std::vector<InputPad> m_KeyList;
