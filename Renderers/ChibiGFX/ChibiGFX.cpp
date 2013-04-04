@@ -26,6 +26,7 @@ namespace Gwen
 		m_fScale = 1.0f;
 		gdispInit();
 		gdispClear(0);
+		m_font = gdispOpenFont("UI2 Double");
         }
 
         ChibiGFX::~ChibiGFX()
@@ -146,7 +147,7 @@ chprintf((BaseSequentialStream *)&SD2, tmp.c_str());
 		const int x = GetRenderOffset().x + pos.x;
 		const int y = GetRenderOffset().y + pos.y;
 		float fSize = pFont->size * Scale();
-		gdispDrawString(x, y, Gwen::Utility::UnicodeToString(text).c_str(), &fontUI2, m_color);
+		gdispDrawString(x, y, Gwen::Utility::UnicodeToString(text).c_str(), m_font, m_color);
 #ifdef DEBUG_RENDERER
 		std::string tmp("RenderText [X:"+Gwen::Utility::ToString(x)+" Y:"+Gwen::Utility::ToString(y)+"]\r\n");
 		chprintf((BaseSequentialStream *)&SD2, tmp.c_str());	
@@ -160,7 +161,7 @@ chprintf((BaseSequentialStream *)&SD2, tmp.c_str());
 		//p.x = pFont->size * Scale() * (float)text.length() * 0.4;
 		//p.y = pFont->size * Scale();
 
-		p.x = gdispGetStringWidth(Gwen::Utility::UnicodeToString(text).c_str(), &fontUI2);
+		p.x = gdispGetStringWidth(Gwen::Utility::UnicodeToString(text).c_str(), m_font);
 		p.y = gdispGetFontMetric(&fontUI2, fontHeight);
 		return p;
         }
@@ -171,7 +172,7 @@ chprintf((BaseSequentialStream *)&SD2, tmp.c_str());
 		const int x = GetRenderOffset().x + pos.x;
 		const int y = GetRenderOffset().y + pos.y;
 		//float fSize = pFont->size * Scale();
-		gdispDrawString(x, y, text.c_str(), &fontUI2, m_color);
+		gdispDrawString(x, y, text.c_str(), m_font, m_color);
 #ifdef DEBUG_RENDERER
 		std::string tmp("RenderText [X:"+Gwen::Utility::ToString(x)+" Y:"+Gwen::Utility::ToString(y)+" Text: "+text+ "]\r\n");
 		chprintf((BaseSequentialStream *)&SD2, tmp.c_str());	
@@ -185,8 +186,8 @@ chprintf((BaseSequentialStream *)&SD2, tmp.c_str());
 		//p.x = pFont->size * Scale() * (float)text.length() * 0.4;
 		//p.y = pFont->size * Scale();
 
-		p.x = gdispGetStringWidth(text.c_str(), &fontUI2);
-		p.y = gdispGetFontMetric(&fontUI2, fontHeight);
+		p.x = gdispGetStringWidth(text.c_str(), m_font);
+		p.y = gdispGetFontMetric(m_font, fontHeight);
 
 #ifdef DEBUG_RENDERER
 		std::string tmp("MeasureText [X:"+Gwen::Utility::ToString(p.x)+" Y:"+Gwen::Utility::ToString(p.y)+" Text: "+text+ "]\r\n");

@@ -10,7 +10,6 @@ extern "C" {
     #include "ch.h"
     #include "hal.h"
     #include "gdisp_connector.h"
-    #include "touchscreen.h"
 }
 
 //#define DEBUG_INPUT
@@ -32,11 +31,8 @@ namespace Gwen
             public:
               
                 enum KB_CODES {KB_BACK = 0, KB_RETURN, KB_ESCAPE, KB_TAB, KB_SPACE, KB_UP, KB_DOWN, KB_LEFT, KB_RIGHT};
-	#if defined(GFX_USE_TOUCHSCREEN)
-                ChibiGFX() : m_Spicfg({NULL, TS_CS_PORT, TS_CS, SPI_CR1_BR_1 | SPI_CR1_BR_0}), m_Touchscreen({&TS_SPI, &m_Spicfg, TS_IRQ_PORT, TS_IRQ, TRUE})
-	#else
+		
 		ChibiGFX()
-	#endif
                 {
 			m_Canvas = NULL;
 			m_MouseX = 0;
@@ -46,14 +42,14 @@ namespace Gwen
                 void Initialize( Gwen::Controls::Canvas* c )
                 {
 			m_Canvas = c;
-			#if defined(GFX_USE_TOUCHSCREEN)
-				tsInit(&m_Touchscreen);
+			#if defined(GINPUT_NEED_MOUSE)
+				ginputGetMouse(0);
 			#endif
                 }
                 
                 bool Touched () {
-			#if defined(GFX_USE_TOUCHSCREEN)
-				return tsPressed();
+			#if defined(GINPUT_NEED_MOUSE)
+				return (ev.current_buttons & GINPUT_MOUSE_BTN_LEFT);
 			#else
 				return false;
 			#endif
@@ -61,22 +57,20 @@ namespace Gwen
 
                 bool ProcessTouch(bool touched)
                 {
-			#if defined(GFX_USE_TOUCHSCREEN)
+			#if defined(GINPUT_NEED_MOUSE)
 				if ( !m_Canvas ) return false;
-
-				// Current coordinates
-				int x = tsReadX();
-				int y = tsReadY();
+			
+				ginputGetMouseStatus(0, &ev);
 
 				int dx, dy;
 
 				if (touched) {
 					// Last coordinates
-					dx = x - m_MouseX;
-					dy = y - m_MouseY;
+					dx = ev.x - m_MouseX;
+					dy = ev.y - m_MouseY;
 
-					m_MouseX = x;
-					m_MouseY = y;
+					m_MouseX = ev.x;
+					m_MouseY = ev.y;
 				}
 				else {
 					// don't move
@@ -149,9 +143,8 @@ namespace Gwen
 			Gwen::Controls::Canvas*	m_Canvas;
 			int m_MouseX;
 			int m_MouseY;
-			#if defined(GFX_USE_TOUCHSCREEN)
-				const SPIConfig m_Spicfg;
-				const TouchscreenDriver m_Touchscreen;
+			#if defined(GINPUT_NEED_MOUSE)
+				GEventMouse	ev;
 			#endif
 			struct InputPad {GPIO_TypeDef* Port; unsigned char Pad; unsigned char Key; };
 			std::vector<InputPad> m_KeyList;

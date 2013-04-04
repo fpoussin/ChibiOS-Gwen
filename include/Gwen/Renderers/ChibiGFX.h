@@ -66,7 +66,7 @@ namespace Gwen
             private:
                 color_t m_color;
                 float m_fScale;
-
+		font_t m_font;
 		};
 
 	}

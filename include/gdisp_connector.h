@@ -1,6 +1,6 @@
 
 
-#include "gdisp.h"
+#include "gfx.h"
 
 #ifdef White
 	#undef White
