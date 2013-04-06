@@ -49,6 +49,7 @@ namespace Gwen
                 
                 bool Touched () {
 			#if defined(GINPUT_NEED_MOUSE)
+				ginputGetMouseStatus(0, &ev);
 				return (ev.current_buttons & GINPUT_MOUSE_BTN_LEFT);
 			#else
 				return false;
