@@ -26,7 +26,7 @@ namespace Gwen
 		m_fScale = 1.0f;
 		gdispInit();
 		gdispClear(0);
-		m_font = gdispOpenFont("UI2 Double");
+		m_font = gdispOpenFont("UI2");
         }
 
         ChibiGFX::~ChibiGFX()
@@ -198,6 +198,7 @@ chprintf((BaseSequentialStream *)&SD2, tmp.c_str());
 
         void ChibiGFX::LoadFont( Gwen::Font* font )
         {
+		//~ this->m_font = gdispOpenFont(font->facename);
 		font->realsize = font->size * Scale();
 	}
 
